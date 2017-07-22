@@ -18,3 +18,8 @@ class TestChessGame(TestCase):
 
 		for piece in aChessGame.board().pieces():
 			self.assertIsInstance(piece, Piece)
+
+	def test03AGameStartsWithABoardThatHas32Pieces(self):
+		aChessGame = ChessGame()
+
+		self.assertTrue(len(aChessGame.board().pieces()) is 32)
