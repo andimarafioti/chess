@@ -2,6 +2,7 @@ from unittest import TestCase
 
 from game.boards.chessBoard import ChessBoard
 from game.chessGame import ChessGame
+from game.pieces.invalidMovementError import InvalidMovementError
 from game.pieces.pawn import Pawn
 from game.pieces.piece import Piece
 
@@ -39,7 +40,7 @@ class TestChessGame(TestCase):
 
 		aPawn = aChessGame.pieceAt(aRow=1, aColumn=0)
 
-		with self.assertRaises(AssertionError):
+		with self.assertRaises(InvalidMovementError):
 			aChessGame.moveAPieceFromAPositionToAnother(aPiece=aPawn, anInitialRow=1, anInitialColumn=1, aNewRow=3, aNewColumn=0)
 
 	def test06UponInitializationAnyPieceAtTheSecondRowIsAPawn(self):
@@ -48,3 +49,11 @@ class TestChessGame(TestCase):
 
 		for pawn in aListOfPawns:
 			self.assertIsInstance(pawn, Pawn)
+
+	def test07aPawnFirstMovementCantBeMovingForwardThreeSpaces(self):
+		aChessGame = ChessGame()
+
+		aPawn = aChessGame.pieceAt(aRow=1, aColumn=0)
+
+		with self.assertRaises(InvalidMovementError):
+			aChessGame.moveAPieceFromAPositionToAnother(aPiece=aPawn, anInitialRow=1, anInitialColumn=0, aNewRow=4, aNewColumn=0)

@@ -1,3 +1,6 @@
+from game.pieces.invalidMovementError import InvalidMovementError
+
+
 class ChessBoard(object):
 	ROW_COUNT = 8
 	COLUMN_COUNT = 8
@@ -24,7 +27,11 @@ class ChessBoard(object):
 		return self._matrixOfPieces[aRow][aColumn]
 
 	def moveAPieceFromAPositionToAnother(self, aPiece, anInitialRow, anInitialColumn, aNewRow, aNewColumn):
-		assert aPiece == self._matrixOfPieces[anInitialRow][anInitialColumn]
+		if not aPiece == self._matrixOfPieces[anInitialRow][anInitialColumn]:
+			raise InvalidMovementError
+
+		if not aPiece.canMoveFromTo(anInitialRow, anInitialColumn, aNewRow, aNewColumn):
+			raise InvalidMovementError
 
 		self._matrixOfPieces[anInitialRow][anInitialColumn] = None
 		self._matrixOfPieces[aNewRow][aNewColumn] = aPiece
