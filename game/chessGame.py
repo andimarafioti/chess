@@ -1,5 +1,5 @@
 from game.chessBoard import ChessBoard
-from game.pieces.Piece import Piece
+from game.pieces.piece import Piece
 
 
 class ChessGame(object):
