@@ -2,6 +2,7 @@ from unittest import TestCase
 
 from game.boards.chessBoard import ChessBoard
 from game.chessGame import ChessGame
+from game.pieces.pawn import Pawn
 from game.pieces.piece import Piece
 
 
@@ -41,4 +42,9 @@ class TestChessGame(TestCase):
 		with self.assertRaises(AssertionError):
 			aChessGame.moveAPieceFromAPositionToAnother(aPiece=aPawn, anInitialRow=1, anInitialColumn=1, aNewRow=3, aNewColumn=0)
 
+	def test06UponInitializationAnyPieceAtTheSecondRowIsAPawn(self):
+		aChessGame = ChessGame()
+		aListOfPawns = [aChessGame.pieceAt(aRow=1, aColumn=column) for column in range(8)]
 
+		for pawn in aListOfPawns:
+			self.assertIsInstance(pawn, Pawn)

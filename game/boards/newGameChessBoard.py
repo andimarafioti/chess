@@ -1,4 +1,5 @@
 from game.boards.chessBoard import ChessBoard
+from game.pieces.pawn import Pawn
 from game.pieces.piece import Piece
 
 
@@ -16,8 +17,8 @@ class NewGameChessBoard(ChessBoard):
 
 		for column in range(self.COLUMN_COUNT):
 			newGameMatrixOfPieces[0][column] = Piece()
-			newGameMatrixOfPieces[1][column] = Piece()
-			newGameMatrixOfPieces[6][column] = Piece()
+			newGameMatrixOfPieces[1][column] = Pawn()
+			newGameMatrixOfPieces[6][column] = Pawn()
 			newGameMatrixOfPieces[7][column] = Piece()
 
 		return newGameMatrixOfPieces
