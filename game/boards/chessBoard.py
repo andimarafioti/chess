@@ -2,7 +2,7 @@ class ChessBoard(object):
 	ROW_COUNT = 8
 	COLUMN_COUNT = 8
 
-	def __init__(self, dictionaryOfPositionsAndPieces):
+	def __init__(self, aMatrixOfPieces):
 		super(ChessBoard, self).__init__()
 		self._matrixOfPieces = []
 		for row in range(self.ROW_COUNT):
@@ -10,7 +10,7 @@ class ChessBoard(object):
 			for column in range(self.COLUMN_COUNT):
 				self._matrixOfPieces[row].append(None)
 
-		self._initializeMatrixOfPiecesWith(dictionaryOfPositionsAndPieces)
+		self._initializeMatrixOfPiecesWith(aMatrixOfPieces)
 
 	def pieces(self):
 		pieces = []
@@ -20,8 +20,11 @@ class ChessBoard(object):
 					pieces.append(self._matrixOfPieces[row][column])
 		return pieces
 
-	def _initializeMatrixOfPiecesWith(self, aDictionaryOfPositionsAndPieces):
-		for row in range(self.ROW_COUNT):
-			for column in range(self.COLUMN_COUNT):
-				if aDictionaryOfPositionsAndPieces.has_key((row, column)):
-					self._matrixOfPieces[row][column] = aDictionaryOfPositionsAndPieces[(row, column)]
+	def pieceAt(self, aRow, aColumn):
+		return self._matrixOfPieces[aRow][aColumn]
+
+	def _initializeMatrixOfPiecesWith(self, aMatrixOfPieces):
+		assert len(aMatrixOfPieces) is 8, "Tried to initialize a Board with a wrong size"
+		assert len(aMatrixOfPieces[0]) is 8, "Tried to initialize a Board with a wrong size"
+
+		self._matrixOfPieces = aMatrixOfPieces

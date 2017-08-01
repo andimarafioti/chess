@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from game.chessBoard import ChessBoard
+from game.boards.chessBoard import ChessBoard
 from game.chessGame import ChessGame
 from game.pieces.piece import Piece
 
@@ -23,3 +23,12 @@ class TestChessGame(TestCase):
 		aChessGame = ChessGame()
 
 		self.assertTrue(len(aChessGame.board().pieces()) is 32)
+
+	def test04TheGameAcceptsAMovement(self):
+		aChessGame = ChessGame()
+
+		aPawn = aChessGame.pieceAt(aRow=2, aColumn=0)
+
+		aChessGame.moveAPieceToAPosition(aPiece=aPawn, aNewRow=4, aNewColumn=0)
+
+		self.assertEqual(aChessGame.pieceAt(row=4, column=0), aPawn)

@@ -1,22 +1,16 @@
-from game.chessBoard import ChessBoard
-from game.pieces.piece import Piece
+from game.boards.newGameChessBoard import NewGameChessBoard
 
 
 class ChessGame(object):
 	def __init__(self):
 		super(ChessGame, self).__init__()
-		self._board = ChessBoard(self._startingChessBoardDictionaryOfPiecesAndPositions())
+		self._board = NewGameChessBoard()
 
 	def board(self):
 		return self._board
 
-	def _startingChessBoardDictionaryOfPiecesAndPositions(self):
-		aDictionaryOfPiecesAndPositions = dict()
+	def pieceAt(self, aRow, aColumn):
+		return self._board.pieceAt(aRow, aColumn)
 
-		for column in range(8):
-			aDictionaryOfPiecesAndPositions[(0, column)] = Piece()
-			aDictionaryOfPiecesAndPositions[(1, column)] = Piece()
-			aDictionaryOfPiecesAndPositions[(6, column)] = Piece()
-			aDictionaryOfPiecesAndPositions[(7, column)] = Piece()
-
-		return aDictionaryOfPiecesAndPositions
+	def moveAPieceToAPosition(self, aPiece, aNewRow, aNewColumn):
+		pass
