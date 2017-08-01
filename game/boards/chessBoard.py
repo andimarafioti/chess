@@ -23,7 +23,6 @@ class ChessBoard(object):
 	def pieceAt(self, aRow, aColumn):
 		return self._matrixOfPieces[aRow][aColumn]
 
-
 	def moveAPieceFromAPositionToAnother(self, aPiece, anInitialRow, anInitialColumn, aNewRow, aNewColumn):
 		assert aPiece == self._matrixOfPieces[anInitialRow][anInitialColumn]
 
