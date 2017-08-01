@@ -33,11 +33,12 @@ class TestChessGame(TestCase):
 
 		self.assertEqual(aChessGame.pieceAt(aRow=3, aColumn=0), aPawn)
 
-	def test05TheGameDoesntAcceptAMovementIfThePieceIsNotATheInitialPosition(self):
+	def test05TheGameDoesntAcceptAMovementIfThePieceIsNotAtTheInitialPosition(self):
 		aChessGame = ChessGame()
 
 		aPawn = aChessGame.pieceAt(aRow=1, aColumn=0)
 
 		with self.assertRaises(AssertionError):
 			aChessGame.moveAPieceFromAPositionToAnother(aPiece=aPawn, anInitialRow=1, anInitialColumn=1, aNewRow=3, aNewColumn=0)
+
 
