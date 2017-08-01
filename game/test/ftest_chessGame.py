@@ -29,6 +29,6 @@ class TestChessGame(TestCase):
 
 		aPawn = aChessGame.pieceAt(aRow=2, aColumn=0)
 
-		aChessGame.moveAPieceToAPosition(aPiece=aPawn, aNewRow=4, aNewColumn=0)
+		aChessGame.moveAPieceFromAPositionToAnother(aPiece=aPawn, anInitialRow=2, anInitialColumn=0, aNewRow=4, aNewColumn=0)
 
-		self.assertEqual(aChessGame.pieceAt(row=4, column=0), aPawn)
+		self.assertEqual(aChessGame.pieceAt(aRow=4, aColumn=0), aPawn)

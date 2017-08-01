@@ -12,5 +12,5 @@ class ChessGame(object):
 	def pieceAt(self, aRow, aColumn):
 		return self._board.pieceAt(aRow, aColumn)
 
-	def moveAPieceToAPosition(self, aPiece, aNewRow, aNewColumn):
-		pass
+	def moveAPieceFromAPositionToAnother(self, aPiece, anInitialRow, anInitialColumn, aNewRow, aNewColumn):
+		self._board = self._board.moveAPieceFromAPositionToAnother(aPiece, anInitialRow, anInitialColumn, aNewRow, aNewColumn)
