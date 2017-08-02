@@ -69,9 +69,10 @@ class TestChessGame(TestCase):
 	def test08aBishopMovesInDiagonals(self):
 		aChessGame = ChessGame()
 
-		# aPawn = aChessGame.pieceAt(aRow=1, aColumn=3)
-		# aMovement = Movement(anInitialRow=1, anInitialColumn=3, aNewRow=3, aNewColumn=3)
-		# aBishopFreeingPlay = Play(aPiece=aPawn, aMovement=aMovement)
+		aPawn = aChessGame.pieceAt(aRow=1, aColumn=3)
+		aMovement = Movement(anInitialRow=1, anInitialColumn=3, aNewRow=3, aNewColumn=3)
+		aBishopFreeingPlay = Play(aPiece=aPawn, aMovement=aMovement)
+		aChessGame.applyAPlay(aBishopFreeingPlay)
 
 		aBishop = aChessGame.pieceAt(aRow=0, aColumn=2)
 		aMovement = Movement(anInitialRow=0, anInitialColumn=2, aNewRow=2, aNewColumn=4)
@@ -84,3 +85,14 @@ class TestChessGame(TestCase):
 	def test09aMovementHasToChangeItsPosition(self):
 		with self.assertRaises(InvalidMovementError):
 			Movement(anInitialRow=0, anInitialColumn=2, aNewRow=0, aNewColumn=2)
+
+	def test10aBishopCantApplyAMovementThatHasAnotherPieceInItsPath(self):
+		aChessGame = ChessGame()
+
+		aBishop = aChessGame.pieceAt(aRow=0, aColumn=2)
+		aMovement = Movement(anInitialRow=0, anInitialColumn=2, aNewRow=2, aNewColumn=4)
+		aPlay = Play(aPiece=aBishop, aMovement=aMovement)
+
+		with self.assertRaises(InvalidMovementError):
+			aChessGame.applyAPlay(aPlay)
+

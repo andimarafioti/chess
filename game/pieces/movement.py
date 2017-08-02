@@ -22,3 +22,18 @@ class Movement(object):
 
 	def newColumn(self):
 		return self._aNewColumn
+
+	def path(self):
+		path = [(self._anInitialRow, self._anInitialColumn)]
+		while path[-1] != (self._aNewRow, self._aNewColumn):
+			newRow = path[-1][0] + self._direction(path[-1][0], self._aNewRow)
+			newColumn = path[-1][1] + self._direction(path[-1][1], self._aNewColumn)
+			path.append((newRow, newColumn))
+		return path
+
+	def _direction(self, anStartingPoint, aFinishPoint):
+		gradient = 0
+		if anStartingPoint != aFinishPoint:
+			gradient = aFinishPoint - anStartingPoint
+			gradient = gradient / abs(gradient)
+		return gradient
