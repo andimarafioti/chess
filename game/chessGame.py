@@ -1,4 +1,5 @@
 from game.boards.newGameChessBoard import NewGameChessBoard
+from game.pieces.invalidMovementError import InvalidMovementError
 
 
 class ChessGame(object):
@@ -14,3 +15,10 @@ class ChessGame(object):
 
 	def moveAPieceFromAPositionToAnother(self, aPiece, anInitialRow, anInitialColumn, aNewRow, aNewColumn):
 		self._board = self._board.moveAPieceFromAPositionToAnother(aPiece, anInitialRow, anInitialColumn, aNewRow, aNewColumn)
+
+	def applyAPlay(self, aPlay):
+		try:
+			newBoard = self._board.applyAPlay(aPlay)
+		except InvalidMovementError, e:
+			raise e
+		self._board = newBoard

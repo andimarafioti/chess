@@ -26,15 +26,14 @@ class ChessBoard(object):
 	def pieceAt(self, aRow, aColumn):
 		return self._matrixOfPieces[aRow][aColumn]
 
-	def moveAPieceFromAPositionToAnother(self, aPiece, anInitialRow, anInitialColumn, aNewRow, aNewColumn):
-		if not aPiece == self._matrixOfPieces[anInitialRow][anInitialColumn]:
+	def applyAPlay(self, aPlay):
+		if not aPlay.piece() == self._matrixOfPieces[aPlay.initialRow()][aPlay.initialColumn()]:
+			raise InvalidMovementError
+		if not aPlay.piece().canApplyAMovement(aPlay.movement()):
 			raise InvalidMovementError
 
-		if not aPiece.canMoveFromTo(anInitialRow, anInitialColumn, aNewRow, aNewColumn):
-			raise InvalidMovementError
-
-		self._matrixOfPieces[anInitialRow][anInitialColumn] = None
-		self._matrixOfPieces[aNewRow][aNewColumn] = aPiece
+		self._matrixOfPieces[aPlay.initialRow()][aPlay.initialColumn()] = None
+		self._matrixOfPieces[aPlay.newRow()][aPlay.newColumn()] = aPlay.piece()
 
 		return ChessBoard(self._matrixOfPieces)
 

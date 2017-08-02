@@ -2,5 +2,5 @@ class Piece(object):
 	def __init__(self):
 		super(Piece, self).__init__()
 
-	def canMoveFromTo(self, anInitialRow, anInitialColumn, aNewRow, aNewColumn):
+	def canApplyAMovement(self, aMovement):
 		raise NotImplementedError("Subclass Responsibility")

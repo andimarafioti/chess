@@ -3,8 +3,10 @@ from unittest import TestCase
 from game.boards.chessBoard import ChessBoard
 from game.chessGame import ChessGame
 from game.pieces.invalidMovementError import InvalidMovementError
+from game.pieces.movement import Movement
 from game.pieces.pawn import Pawn
 from game.pieces.piece import Piece
+from game.play import Play
 
 
 class TestChessGame(TestCase):
@@ -30,8 +32,10 @@ class TestChessGame(TestCase):
 		aChessGame = ChessGame()
 
 		aPawn = aChessGame.pieceAt(aRow=1, aColumn=0)
+		aMovement = Movement(anInitialRow=1, anInitialColumn=0, aNewRow=3, aNewColumn=0)
+		aPlay = Play(aPiece=aPawn, aMovement=aMovement)
 
-		aChessGame.moveAPieceFromAPositionToAnother(aPiece=aPawn, anInitialRow=1, anInitialColumn=0, aNewRow=3, aNewColumn=0)
+		aChessGame.applyAPlay(aPlay)
 
 		self.assertEqual(aChessGame.pieceAt(aRow=3, aColumn=0), aPawn)
 
@@ -39,9 +43,11 @@ class TestChessGame(TestCase):
 		aChessGame = ChessGame()
 
 		aPawn = aChessGame.pieceAt(aRow=1, aColumn=0)
+		aMovement = Movement(anInitialRow=1, anInitialColumn=1, aNewRow=3, aNewColumn=0)
+		aPlay = Play(aPiece=aPawn, aMovement=aMovement)
 
 		with self.assertRaises(InvalidMovementError):
-			aChessGame.moveAPieceFromAPositionToAnother(aPiece=aPawn, anInitialRow=1, anInitialColumn=1, aNewRow=3, aNewColumn=0)
+			aChessGame.applyAPlay(aPlay)
 
 	def test06UponInitializationAnyPieceAtTheSecondRowIsAPawn(self):
 		aChessGame = ChessGame()
@@ -54,6 +60,8 @@ class TestChessGame(TestCase):
 		aChessGame = ChessGame()
 
 		aPawn = aChessGame.pieceAt(aRow=1, aColumn=0)
+		aMovement = Movement(anInitialRow=1, anInitialColumn=0, aNewRow=4, aNewColumn=0)
+		aPlay = Play(aPiece=aPawn, aMovement=aMovement)
 
 		with self.assertRaises(InvalidMovementError):
-			aChessGame.moveAPieceFromAPositionToAnother(aPiece=aPawn, anInitialRow=1, anInitialColumn=0, aNewRow=4, aNewColumn=0)
+			aChessGame.applyAPlay(aPlay)

@@ -2,8 +2,9 @@ from game.pieces.piece import Piece
 
 
 class Pawn(Piece):
-	def canMoveFromTo(self, anInitialRow, anInitialColumn, aNewRow, aNewColumn):
-		return self._movementIsOneOrTwoStepsInAnyDirection(anInitialRow, anInitialColumn, aNewRow, aNewColumn)
+	def canApplyAMovement(self, aMovement):
+		return self._movementIsOneOrTwoStepsInAnyDirection(aMovement)
 
-	def _movementIsOneOrTwoStepsInAnyDirection(self, anInitialRow, anInitialColumn, aNewRow, aNewColumn):
-		return anInitialColumn == aNewColumn and 0 < abs(anInitialRow - aNewRow) < 3
+	def _movementIsOneOrTwoStepsInAnyDirection(self, aMovement):
+		return aMovement.initialColumn() == aMovement.newColumn() and \
+			0 < abs(aMovement.initialRow() - aMovement.newRow()) < 3
