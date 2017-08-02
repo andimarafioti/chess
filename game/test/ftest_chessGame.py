@@ -28,7 +28,7 @@ class TestChessGame(TestCase):
 
 		self.assertTrue(len(aChessGame.board().pieces()) is 32)
 
-	def test04TheGameAcceptsAMovement(self):
+	def test04TheGameAcceptsAPlay(self):
 		aChessGame = ChessGame()
 
 		aPawn = aChessGame.pieceAt(aRow=1, aColumn=0)
@@ -39,7 +39,7 @@ class TestChessGame(TestCase):
 
 		self.assertEqual(aChessGame.pieceAt(aRow=3, aColumn=0), aPawn)
 
-	def test05TheGameDoesntAcceptAMovementIfThePieceIsNotAtTheInitialPosition(self):
+	def test05TheGameDoesntAcceptAPlayIfThePieceIsNotAtTheInitialPosition(self):
 		aChessGame = ChessGame()
 
 		aPawn = aChessGame.pieceAt(aRow=1, aColumn=0)
@@ -65,3 +65,22 @@ class TestChessGame(TestCase):
 
 		with self.assertRaises(InvalidMovementError):
 			aChessGame.applyAPlay(aPlay)
+
+	def test08aBishopMovesInDiagonals(self):
+		aChessGame = ChessGame()
+
+		# aPawn = aChessGame.pieceAt(aRow=1, aColumn=3)
+		# aMovement = Movement(anInitialRow=1, anInitialColumn=3, aNewRow=3, aNewColumn=3)
+		# aBishopFreeingPlay = Play(aPiece=aPawn, aMovement=aMovement)
+
+		aBishop = aChessGame.pieceAt(aRow=0, aColumn=2)
+		aMovement = Movement(anInitialRow=0, anInitialColumn=2, aNewRow=2, aNewColumn=4)
+		aPlay = Play(aPiece=aBishop, aMovement=aMovement)
+
+		aChessGame.applyAPlay(aPlay)
+
+		self.assertEqual(aChessGame.pieceAt(aRow=2, aColumn=4), aBishop)
+
+	def test09aMovementHasToChangeItsPosition(self):
+		with self.assertRaises(InvalidMovementError):
+			Movement(anInitialRow=0, anInitialColumn=2, aNewRow=0, aNewColumn=2)

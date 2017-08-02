@@ -1,5 +1,11 @@
+from game.pieces.invalidMovementError import InvalidMovementError
+
+
 class Movement(object):
 	def __init__(self, anInitialRow, anInitialColumn, aNewRow, aNewColumn):
+		if anInitialRow == aNewRow and anInitialColumn == aNewColumn:
+			raise InvalidMovementError
+
 		self._anInitialRow = anInitialRow
 		self._anInitialColumn = anInitialColumn
 		self._aNewRow = aNewRow

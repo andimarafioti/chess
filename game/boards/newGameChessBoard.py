@@ -1,4 +1,5 @@
 from game.boards.chessBoard import ChessBoard
+from game.pieces.bishop import Bishop
 from game.pieces.pawn import Pawn
 from game.pieces.piece import Piece
 
@@ -20,5 +21,10 @@ class NewGameChessBoard(ChessBoard):
 			newGameMatrixOfPieces[1][column] = Pawn()
 			newGameMatrixOfPieces[6][column] = Pawn()
 			newGameMatrixOfPieces[7][column] = Piece()
+
+		newGameMatrixOfPieces[0][2] = Bishop()
+		newGameMatrixOfPieces[0][5] = Bishop()
+		newGameMatrixOfPieces[6][2] = Bishop()
+		newGameMatrixOfPieces[6][5] = Bishop()
 
 		return newGameMatrixOfPieces
