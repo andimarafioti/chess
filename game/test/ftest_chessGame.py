@@ -111,3 +111,19 @@ class TestChessGame(TestCase):
 		aChessGame.applyAPlay(aPlay)
 
 		self.assertEqual(aChessGame.pieceAt(aRow=2, aColumn=1), aQueen)
+
+	def test10aQueenCanMoveStraight(self):
+		aChessGame = ChessGame()
+
+		aPawn = aChessGame.pieceAt(aRow=1, aColumn=3)
+		aMovement = Movement(anInitialRow=1, anInitialColumn=3, aNewRow=3, aNewColumn=3)
+		aQueenFreeingPlay = Play(aPiece=aPawn, aMovement=aMovement)
+		aChessGame.applyAPlay(aQueenFreeingPlay)
+
+		aQueen = aChessGame.pieceAt(aRow=0, aColumn=3)
+		aMovement = Movement(anInitialRow=0, anInitialColumn=3, aNewRow=2, aNewColumn=3)
+		aPlay = Play(aPiece=aQueen, aMovement=aMovement)
+
+		aChessGame.applyAPlay(aPlay)
+
+		self.assertEqual(aChessGame.pieceAt(aRow=2, aColumn=3), aQueen)

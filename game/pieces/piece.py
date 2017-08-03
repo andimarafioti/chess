@@ -11,3 +11,6 @@ class Piece(object):
 	def _isADiagonalMovement(self, aMovement):
 		return abs(aMovement.initialRow() - aMovement.newRow()) == \
 				abs(aMovement.initialColumn() - aMovement.newColumn())
+
+	def _isAnStraightMovement(self, aMovement):
+		return aMovement.initialRow() == aMovement.newRow() or aMovement.initialColumn() == aMovement.newColumn()
