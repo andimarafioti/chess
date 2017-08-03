@@ -6,4 +6,5 @@ class Knight(Piece):
 		return True
 
 	def canApplyAMovement(self, aMovement):
-		return not self._isADiagonalMovement(aMovement)
+		return not self._isADiagonalMovement(aMovement) and not self._isAnStraightMovement(aMovement) \
+				and len(aMovement.path()) == 3

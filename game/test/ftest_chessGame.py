@@ -148,3 +148,23 @@ class TestChessGame(TestCase):
 
 		with self.assertRaises(InvalidMovementError):
 			aChessGame.applyAPlay(aPlay)
+
+	def test15aKnightCantMoveStraight(self):
+		aChessGame = ChessGame()
+
+		aKnight = aChessGame.pieceAt(aRow=0, aColumn=1)
+		aMovement = Movement(anInitialRow=0, anInitialColumn=1, aNewRow=2, aNewColumn=1)
+		aPlay = Play(aPiece=aKnight, aMovement=aMovement)
+
+		with self.assertRaises(InvalidMovementError):
+			aChessGame.applyAPlay(aPlay)
+
+	def test16aKnightCantMove2StepsForwardAnd3StepsToASide(self):
+		aChessGame = ChessGame()
+
+		aKnight = aChessGame.pieceAt(aRow=0, aColumn=1)
+		aMovement = Movement(anInitialRow=0, anInitialColumn=1, aNewRow=2, aNewColumn=4)
+		aPlay = Play(aPiece=aKnight, aMovement=aMovement)
+
+		with self.assertRaises(InvalidMovementError):
+			aChessGame.applyAPlay(aPlay)
