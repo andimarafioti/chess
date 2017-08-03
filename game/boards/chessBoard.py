@@ -7,13 +7,10 @@ class ChessBoard(object):
 
 	def __init__(self, aMatrixOfPieces):
 		super(ChessBoard, self).__init__()
-		self._matrixOfPieces = []
-		for row in range(self.ROW_COUNT):
-			self._matrixOfPieces.append([])
-			for column in range(self.COLUMN_COUNT):
-				self._matrixOfPieces[row].append(None)
+		assert len(aMatrixOfPieces) is 8, "Tried to initialize a Board with a wrong size"
+		assert len(aMatrixOfPieces[0]) is 8, "Tried to initialize a Board with a wrong size"
 
-		self._initializeMatrixOfPiecesWith(aMatrixOfPieces)
+		self._matrixOfPieces = aMatrixOfPieces
 
 	def pieces(self):
 		pieces = []
@@ -49,9 +46,3 @@ class ChessBoard(object):
 		for row, column in intermediary_path:
 			is_ocuppied.append(self._matrixOfPieces[row][column] is None)
 		return all(is_ocuppied)
-
-	def _initializeMatrixOfPiecesWith(self, aMatrixOfPieces):
-		assert len(aMatrixOfPieces) is 8, "Tried to initialize a Board with a wrong size"
-		assert len(aMatrixOfPieces[0]) is 8, "Tried to initialize a Board with a wrong size"
-
-		self._matrixOfPieces = aMatrixOfPieces
