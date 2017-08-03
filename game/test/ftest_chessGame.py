@@ -112,7 +112,7 @@ class TestChessGame(TestCase):
 
 		self.assertEqual(aChessGame.pieceAt(aRow=2, aColumn=1), aQueen)
 
-	def test10aQueenCanMoveStraight(self):
+	def test12aQueenCanMoveStraight(self):
 		aChessGame = ChessGame()
 
 		aPawn = aChessGame.pieceAt(aRow=1, aColumn=3)
@@ -127,3 +127,24 @@ class TestChessGame(TestCase):
 		aChessGame.applyAPlay(aPlay)
 
 		self.assertEqual(aChessGame.pieceAt(aRow=2, aColumn=3), aQueen)
+
+	def test13aKnightCanJump(self):
+		aChessGame = ChessGame()
+
+		aKnight = aChessGame.pieceAt(aRow=0, aColumn=1)
+		aMovement = Movement(anInitialRow=0, anInitialColumn=1, aNewRow=2, aNewColumn=2)
+		aPlay = Play(aPiece=aKnight, aMovement=aMovement)
+
+		aChessGame.applyAPlay(aPlay)
+
+		self.assertEqual(aChessGame.pieceAt(aRow=2, aColumn=2), aKnight)
+
+	def test14aKnightCantMoveInDiagonals(self):
+		aChessGame = ChessGame()
+
+		aKnight = aChessGame.pieceAt(aRow=0, aColumn=1)
+		aMovement = Movement(anInitialRow=0, anInitialColumn=1, aNewRow=2, aNewColumn=3)
+		aPlay = Play(aPiece=aKnight, aMovement=aMovement)
+
+		with self.assertRaises(InvalidMovementError):
+			aChessGame.applyAPlay(aPlay)
