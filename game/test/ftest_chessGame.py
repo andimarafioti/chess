@@ -96,3 +96,18 @@ class TestChessGame(TestCase):
 		with self.assertRaises(InvalidMovementError):
 			aChessGame.applyAPlay(aPlay)
 
+	def test11aQueenCanMoveInDiagonals(self):
+		aChessGame = ChessGame()
+
+		aPawn = aChessGame.pieceAt(aRow=1, aColumn=2)
+		aMovement = Movement(anInitialRow=1, anInitialColumn=2, aNewRow=3, aNewColumn=2)
+		aQueenFreeingPlay = Play(aPiece=aPawn, aMovement=aMovement)
+		aChessGame.applyAPlay(aQueenFreeingPlay)
+
+		aQueen = aChessGame.pieceAt(aRow=0, aColumn=3)
+		aMovement = Movement(anInitialRow=0, anInitialColumn=3, aNewRow=2, aNewColumn=1)
+		aPlay = Play(aPiece=aQueen, aMovement=aMovement)
+
+		aChessGame.applyAPlay(aPlay)
+
+		self.assertEqual(aChessGame.pieceAt(aRow=2, aColumn=1), aQueen)
