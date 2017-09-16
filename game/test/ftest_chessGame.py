@@ -184,3 +184,20 @@ class TestChessGame(TestCase):
 		aChessGame.applyAPlay(aPlay)
 
 		self.assertEqual(aChessGame.pieceAt(aRow=2, aColumn=0), aRook)
+
+	def test18aKingCanMoveInAnyDirectionOneStepAtATime(self):
+		aChessGame = ChessGame()
+
+		aPawn = aChessGame.pieceAt(aRow=1, aColumn=4)
+		aMovement = Movement(anInitialRow=1, anInitialColumn=4, aNewRow=3, aNewColumn=4)
+		aKingFreeingPlay = Play(aPiece=aPawn, aMovement=aMovement)
+		aChessGame.applyAPlay(aKingFreeingPlay)
+
+		aKing = aChessGame.pieceAt(aRow=0, aColumn=4)
+		aMovement = Movement(anInitialRow=0, anInitialColumn=4, aNewRow=1, aNewColumn=4)
+		aPlay = Play(aPiece=aKing, aMovement=aMovement)
+
+		aChessGame.applyAPlay(aPlay)
+
+		self.assertEqual(aChessGame.pieceAt(aRow=1, aColumn=4), aKing)
+
