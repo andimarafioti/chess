@@ -4,6 +4,7 @@ from game.pieces.knight import Knight
 from game.pieces.pawn import Pawn
 from game.pieces.piece import Piece
 from game.pieces.queen import Queen
+from game.pieces.rook import Rook
 
 
 class NewGameChessBoard(ChessBoard):
@@ -36,5 +37,11 @@ class NewGameChessBoard(ChessBoard):
 		newGameMatrixOfPieces[0][6] = Knight()
 		newGameMatrixOfPieces[7][1] = Knight()
 		newGameMatrixOfPieces[7][6] = Knight()
+
+		newGameMatrixOfPieces[0][0] = Rook()
+		newGameMatrixOfPieces[0][7] = Rook()
+		newGameMatrixOfPieces[7][0] = Rook()
+		newGameMatrixOfPieces[7][7] = Rook()
+
 
 		return newGameMatrixOfPieces

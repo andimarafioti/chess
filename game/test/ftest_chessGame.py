@@ -168,3 +168,19 @@ class TestChessGame(TestCase):
 
 		with self.assertRaises(InvalidMovementError):
 			aChessGame.applyAPlay(aPlay)
+
+	def test17aRookCanMoveInAStraightLine(self):
+		aChessGame = ChessGame()
+
+		aPawn = aChessGame.pieceAt(aRow=1, aColumn=0)
+		aMovement = Movement(anInitialRow=1, anInitialColumn=0, aNewRow=3, aNewColumn=0)
+		aRookFreeingPlay = Play(aPiece=aPawn, aMovement=aMovement)
+		aChessGame.applyAPlay(aRookFreeingPlay)
+
+		aRook = aChessGame.pieceAt(aRow=0, aColumn=0)
+		aMovement = Movement(anInitialRow=0, anInitialColumn=0, aNewRow=2, aNewColumn=0)
+		aPlay = Play(aPiece=aRook, aMovement=aMovement)
+
+		aChessGame.applyAPlay(aPlay)
+
+		self.assertEqual(aChessGame.pieceAt(aRow=2, aColumn=0), aRook)
