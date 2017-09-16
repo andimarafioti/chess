@@ -1,4 +1,4 @@
-from game.pieces.invalidMovementError import InvalidMovementError
+from game.movements.invalidMovementError import InvalidMovementError
 
 
 class Movement(object):

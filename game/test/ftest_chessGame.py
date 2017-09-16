@@ -1,9 +1,10 @@
 from unittest import TestCase
 
+from game.algebraicallyNotatedPlay import AlgebraicallyNotatedPlay
 from game.boards.chessBoard import ChessBoard
 from game.chessGame import ChessGame
-from game.pieces.invalidMovementError import InvalidMovementError
-from game.pieces.movement import Movement
+from game.movements.invalidMovementError import InvalidMovementError
+from game.movements.movement import Movement
 from game.pieces.pawn import Pawn
 from game.pieces.piece import Piece
 from game.play import Play
@@ -201,3 +202,16 @@ class TestChessGame(TestCase):
 
 		self.assertEqual(aChessGame.pieceAt(aRow=1, aColumn=4), aKing)
 
+	def test19aNewChessGameIsNotFinished(self):
+		aCheesGame = ChessGame()
+
+		self.assertFalse(aCheesGame.isFinished())
+
+	def test20aPlayInAlgebraicNotationCanBeApplied(self):
+		aChessGame = ChessGame()
+
+		aPawn = aChessGame.pieceAt(aRow=1, aColumn=4)
+		aPlayInAlgebraicNotation = AlgebraicallyNotatedPlay('e2 e4', aChessGame)
+		aChessGame.applyAPlay(aPlayInAlgebraicNotation)
+
+		self.assertEqual(aChessGame.pieceAt(aRow=3, aColumn=4), aPawn)

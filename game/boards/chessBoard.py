@@ -1,4 +1,4 @@
-from game.pieces.invalidMovementError import InvalidMovementError
+from game.movements.invalidMovementError import InvalidMovementError
 
 
 class ChessBoard(object):
@@ -11,6 +11,14 @@ class ChessBoard(object):
 		assert len(aMatrixOfPieces[0]) is 8, "Tried to initialize a Board with a wrong size"
 
 		self._matrixOfPieces = aMatrixOfPieces
+
+	def __repr__(self):
+		output = ""
+		matrix = self._matrixOfPieces[:]
+		matrix.reverse()
+		for column in matrix:
+			output += str(column) + "\n"
+		return output
 
 	def pieces(self):
 		pieces = []

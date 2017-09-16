@@ -1,11 +1,14 @@
 from game.boards.newGameChessBoard import NewGameChessBoard
-from game.pieces.invalidMovementError import InvalidMovementError
+from game.movements.invalidMovementError import InvalidMovementError
 
 
 class ChessGame(object):
 	def __init__(self):
 		super(ChessGame, self).__init__()
 		self._board = NewGameChessBoard()
+
+	def isFinished(self):
+		return False
 
 	def board(self):
 		return self._board

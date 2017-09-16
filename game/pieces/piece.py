@@ -2,6 +2,9 @@ class Piece(object):
 	def __init__(self):
 		super(Piece, self).__init__()
 
+	def __repr__(self):
+		return type(self).__name__
+
 	def canJumpAnotherPiece(self):
 		return False
 
