@@ -1,5 +1,9 @@
+from game.pieces.piece import Piece
+
+
 class Play(object):
 	def __init__(self, aPiece, aMovement):
+		assert isinstance(aPiece, Piece), 'A play has to involve a Piece'
 		self._aPiece = aPiece
 		self._aMovement = aMovement
 

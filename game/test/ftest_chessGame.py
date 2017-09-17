@@ -224,3 +224,5 @@ class TestChessGame(TestCase):
 		self.assertTrue(len(players) == 2)
 		self.assertIsInstance(players[0], Player)
 		self.assertIsInstance(players[1], Player)
+
+
