@@ -8,6 +8,7 @@ from game.movements.movement import Movement
 from game.pieces.pawn import Pawn
 from game.pieces.piece import Piece
 from game.play import Play
+from game.player import Player
 
 
 class TestChessGame(TestCase):
@@ -215,3 +216,11 @@ class TestChessGame(TestCase):
 		aChessGame.applyAPlay(aPlayInAlgebraicNotation)
 
 		self.assertEqual(aChessGame.pieceAt(aRow=3, aColumn=4), aPawn)
+
+	def test21aGameHasTwoPlayers(self):
+		aChessGame = ChessGame()
+		players = aChessGame.players()
+
+		self.assertTrue(len(players) == 2)
+		self.assertIsInstance(players[0], Player)
+		self.assertIsInstance(players[1], Player)

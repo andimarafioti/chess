@@ -1,5 +1,6 @@
 from game.boards.newGameChessBoard import NewGameChessBoard
 from game.movements.invalidMovementError import InvalidMovementError
+from game.player import Player
 
 
 class ChessGame(object):
@@ -25,3 +26,6 @@ class ChessGame(object):
 		except InvalidMovementError, e:
 			raise e
 		self._board = newBoard
+
+	def players(self):
+		return [Player(), Player()]
