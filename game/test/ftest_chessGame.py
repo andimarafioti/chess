@@ -277,3 +277,31 @@ class TestChessGame(TestCase):
 
 		with self.assertRaises(InvalidMovementError):
 			aChessGame.applyAPlay(aPlay)
+
+	def test26aPawnCanMoveInADiagonalIfItsCapturingAnEnemysPiece(self):
+		aChessGame = ChessGame()
+
+		aWhitePawn = aChessGame.pieceAt(aRow=1, aColumn=0)
+		aMovement = Movement(anInitialRow=1, anInitialColumn=0, aNewRow=3, aNewColumn=0)
+		aPlay = Play(aPiece=aWhitePawn, aMovement=aMovement)
+		aChessGame.applyAPlay(aPlay)
+
+		aBlackPawn = aChessGame.pieceAt(aRow=6, aColumn=1)
+		aMovement = Movement(anInitialRow=6, anInitialColumn=1, aNewRow=4, aNewColumn=1)
+		aPlay = Play(aPiece=aBlackPawn, aMovement=aMovement)
+		aChessGame.applyAPlay(aPlay)
+
+		aMovement = Movement(anInitialRow=3, anInitialColumn=0, aNewRow=4, aNewColumn=1)
+		aPlay = Play(aPiece=aWhitePawn, aMovement=aMovement)
+		aChessGame.applyAPlay(aPlay)
+
+		self.assertTrue(aChessGame.pieceAt(4, 1) is aWhitePawn)
+
+	def test27aPieceCannotCaptureApieceFromItsSameTeam(self):
+		aChessGame = ChessGame()
+
+		aRook = aChessGame.pieceAt(aRow=0, aColumn=0)
+		aMovement = Movement(anInitialRow=0, anInitialColumn=0, aNewRow=1, aNewColumn=0)
+		aPlay = Play(aPiece=aRook, aMovement=aMovement)
+		with self.assertRaises(InvalidMovementError):
+			aChessGame.applyAPlay(aPlay)

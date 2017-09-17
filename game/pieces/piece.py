@@ -22,6 +22,9 @@ class Piece(object):
 	def canJumpAnotherPiece(self):
 		return False
 
+	def canCaptureAnotherPieceWithAMovement(self, aMovement):
+		self.canApplyAMovement(aMovement)
+
 	def canApplyAMovement(self, aMovement):
 		raise NotImplementedError("Subclass Responsibility")
 

@@ -40,10 +40,17 @@ class ChessBoard(object):
 	def applyAPlay(self, aPlay):
 		if not aPlay.piece() == self._matrixOfPieces[aPlay.initialRow()][aPlay.initialColumn()]:
 			raise InvalidMovementError
-		if not aPlay.piece().canApplyAMovement(aPlay.movement()):
-			raise InvalidMovementError("The piece doesn't move like that")
 		if not self.canApplyAPlaysPath(aPlay):
 			raise InvalidMovementError("The path is blocked!")
+		capturedPiece = self._matrixOfPieces[aPlay.newRow()][aPlay.newColumn()]
+		if capturedPiece:
+			if capturedPiece.isWhite() == aPlay.piece().isWhite():
+				raise InvalidMovementError("Tried to capture Piece from the same team")
+			if not aPlay.piece().canCaptureAnotherPieceWithAMovement(aPlay.movement()):
+				raise InvalidMovementError("The piece can't capture another piece with this movement")
+		else:
+			if not aPlay.piece().canApplyAMovement(aPlay.movement()):
+				raise InvalidMovementError("The piece doesn't move like that")
 
 		self._matrixOfPieces[aPlay.initialRow()][aPlay.initialColumn()] = None
 		self._matrixOfPieces[aPlay.newRow()][aPlay.newColumn()] = aPlay.piece()
