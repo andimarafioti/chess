@@ -245,3 +245,19 @@ class TestChessGame(TestCase):
 
 		boardPieces = aChessGame.board().pieces()
 		self.assertTrue(all([piece in boardPieces for piece in aPlayersPieces]))
+
+	def test24aPawnCantMoveBackwards(self):
+		aChessGame = ChessGame()
+
+		aPawn = aChessGame.pieceAt(aRow=1, aColumn=0)
+		aMovement = Movement(anInitialRow=1, anInitialColumn=0, aNewRow=3, aNewColumn=0)
+		aPlay = Play(aPiece=aPawn, aMovement=aMovement)
+
+		aChessGame.applyAPlay(aPlay)
+
+		aPawn = aChessGame.pieceAt(aRow=3, aColumn=0)
+		aMovement = Movement(anInitialRow=3, anInitialColumn=0, aNewRow=2, aNewColumn=0)
+		aPlay = Play(aPiece=aPawn, aMovement=aMovement)
+
+		with self.assertRaises(InvalidMovementError):
+			aChessGame.applyAPlay(aPlay)
