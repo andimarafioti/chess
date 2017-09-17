@@ -10,6 +10,9 @@ class Piece(object):
 		color = bcolors.OKBLUE if self._isWhite else bcolors.OKGREEN
 		return color + type(self).__name__ + bcolors.ENDC
 
+	def appliedPlay(self, aPlay):
+		return
+
 	def isWhite(self):
 		return self._isWhite
 

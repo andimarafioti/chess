@@ -261,3 +261,19 @@ class TestChessGame(TestCase):
 
 		with self.assertRaises(InvalidMovementError):
 			aChessGame.applyAPlay(aPlay)
+
+	def test25aPawnSecondMovementCanBeTwoSpacesForward(self):
+		aChessGame = ChessGame()
+
+		aPawn = aChessGame.pieceAt(aRow=1, aColumn=0)
+		aMovement = Movement(anInitialRow=1, anInitialColumn=0, aNewRow=3, aNewColumn=0)
+		aPlay = Play(aPiece=aPawn, aMovement=aMovement)
+
+		aChessGame.applyAPlay(aPlay)
+
+		aPawn = aChessGame.pieceAt(aRow=3, aColumn=0)
+		aMovement = Movement(anInitialRow=3, anInitialColumn=0, aNewRow=5, aNewColumn=0)
+		aPlay = Play(aPiece=aPawn, aMovement=aMovement)
+
+		with self.assertRaises(InvalidMovementError):
+			aChessGame.applyAPlay(aPlay)

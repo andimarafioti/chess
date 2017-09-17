@@ -48,7 +48,9 @@ class ChessBoard(object):
 		self._matrixOfPieces[aPlay.initialRow()][aPlay.initialColumn()] = None
 		self._matrixOfPieces[aPlay.newRow()][aPlay.newColumn()] = aPlay.piece()
 
-		return ChessBoard(self._matrixOfPieces)
+		newChessBoard = ChessBoard(self._matrixOfPieces)
+		aPlay.piece().appliedPlay(aPlay)
+		return newChessBoard
 
 	def canApplyAPlaysPath(self, aPlay):
 		return aPlay.piece().canJumpAnotherPiece() or self._movementsPathIsUnocupied(aPlay.movement())
