@@ -3,7 +3,6 @@ from game.pieces.bishop import Bishop
 from game.pieces.king import King
 from game.pieces.knight import Knight
 from game.pieces.pawn import Pawn
-from game.pieces.piece import Piece
 from game.pieces.queen import Queen
 from game.pieces.rook import Rook
 
@@ -21,10 +20,8 @@ class NewGameChessBoard(ChessBoard):
 				newGameMatrixOfPieces[row].append(None)
 
 		for column in range(self.COLUMN_COUNT):
-			newGameMatrixOfPieces[0][column] = Piece()
 			newGameMatrixOfPieces[1][column] = Pawn()
 			newGameMatrixOfPieces[6][column] = Pawn()
-			newGameMatrixOfPieces[7][column] = Piece()
 
 		newGameMatrixOfPieces[0][2] = Bishop()
 		newGameMatrixOfPieces[0][5] = Bishop()
