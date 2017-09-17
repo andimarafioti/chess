@@ -225,4 +225,23 @@ class TestChessGame(TestCase):
 		self.assertIsInstance(players[0], Player)
 		self.assertIsInstance(players[1], Player)
 
+	def test22aPlayHasToInvolveAPiece(self):
+		aChessGame = ChessGame()
 
+		nothing = aChessGame.pieceAt(aRow=3, aColumn=4)
+		aMovement = Movement(anInitialRow=0, anInitialColumn=4, aNewRow=1, aNewColumn=4)
+		with self.assertRaises(AssertionError):
+			aPlay = Play(aPiece=nothing, aMovement=aMovement)
+
+	def test23aPlayerKnowsItsPieces(self):
+		aChessGame = ChessGame()
+		aPlayer = aChessGame.players()[0]
+
+		aPlayersPieces = aPlayer.pieces()
+
+		self.assertTrue(len(aPlayersPieces) == 16)
+		for piece in aPlayersPieces:
+			self.assertIsInstance(piece, Piece)
+
+		boardPieces = aChessGame.board().pieces()
+		self.assertTrue(all([piece in boardPieces for piece in aPlayersPieces]))

@@ -7,6 +7,7 @@ class ChessGame(object):
 	def __init__(self):
 		super(ChessGame, self).__init__()
 		self._board = NewGameChessBoard()
+		self._players = [Player(self._board.whitePieces()), Player(self._board.blackPieces())]
 
 	def isFinished(self):
 		return False
@@ -28,4 +29,4 @@ class ChessGame(object):
 		self._board = newBoard
 
 	def players(self):
-		return [Player(), Player()]
+		return self._players

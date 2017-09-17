@@ -20,28 +20,28 @@ class NewGameChessBoard(ChessBoard):
 				newGameMatrixOfPieces[row].append(None)
 
 		for column in range(self.COLUMN_COUNT):
-			newGameMatrixOfPieces[1][column] = Pawn()
-			newGameMatrixOfPieces[6][column] = Pawn()
+			newGameMatrixOfPieces[1][column] = Pawn(isWhite=True)
+			newGameMatrixOfPieces[6][column] = Pawn(isWhite=False)
 
-		newGameMatrixOfPieces[0][2] = Bishop()
-		newGameMatrixOfPieces[0][5] = Bishop()
-		newGameMatrixOfPieces[7][2] = Bishop()
-		newGameMatrixOfPieces[7][5] = Bishop()
+		newGameMatrixOfPieces[0][2] = Bishop(isWhite=True)
+		newGameMatrixOfPieces[0][5] = Bishop(isWhite=True)
+		newGameMatrixOfPieces[7][2] = Bishop(isWhite=False)
+		newGameMatrixOfPieces[7][5] = Bishop(isWhite=False)
 
-		newGameMatrixOfPieces[0][3] = Queen()
-		newGameMatrixOfPieces[7][3] = Queen()
+		newGameMatrixOfPieces[0][3] = Queen(isWhite=True)
+		newGameMatrixOfPieces[7][3] = Queen(isWhite=False)
 
-		newGameMatrixOfPieces[0][4] = King()
-		newGameMatrixOfPieces[7][4] = King()
+		newGameMatrixOfPieces[0][4] = King(isWhite=True)
+		newGameMatrixOfPieces[7][4] = King(isWhite=False)
 
-		newGameMatrixOfPieces[0][1] = Knight()
-		newGameMatrixOfPieces[0][6] = Knight()
-		newGameMatrixOfPieces[7][1] = Knight()
-		newGameMatrixOfPieces[7][6] = Knight()
+		newGameMatrixOfPieces[0][1] = Knight(isWhite=True)
+		newGameMatrixOfPieces[0][6] = Knight(isWhite=True)
+		newGameMatrixOfPieces[7][1] = Knight(isWhite=False)
+		newGameMatrixOfPieces[7][6] = Knight(isWhite=False)
 
-		newGameMatrixOfPieces[0][0] = Rook()
-		newGameMatrixOfPieces[0][7] = Rook()
-		newGameMatrixOfPieces[7][0] = Rook()
-		newGameMatrixOfPieces[7][7] = Rook()
+		newGameMatrixOfPieces[0][0] = Rook(isWhite=True)
+		newGameMatrixOfPieces[0][7] = Rook(isWhite=True)
+		newGameMatrixOfPieces[7][0] = Rook(isWhite=False)
+		newGameMatrixOfPieces[7][7] = Rook(isWhite=False)
 
 		return newGameMatrixOfPieces

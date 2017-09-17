@@ -28,6 +28,12 @@ class ChessBoard(object):
 					pieces.append(self._matrixOfPieces[row][column])
 		return pieces
 
+	def whitePieces(self):
+		return filter(lambda piece: piece.isWhite(), self.pieces())
+
+	def blackPieces(self):
+		return filter(lambda piece: piece.isBlack(), self.pieces())
+
 	def pieceAt(self, aRow, aColumn):
 		return self._matrixOfPieces[aRow][aColumn]
 
