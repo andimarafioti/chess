@@ -35,9 +35,9 @@ class ChessBoard(object):
 		if not aPlay.piece() == self._matrixOfPieces[aPlay.initialRow()][aPlay.initialColumn()]:
 			raise InvalidMovementError
 		if not aPlay.piece().canApplyAMovement(aPlay.movement()):
-			raise InvalidMovementError
+			raise InvalidMovementError("The piece doesn't move like that")
 		if not self.canApplyAPlaysPath(aPlay):
-			raise InvalidMovementError
+			raise InvalidMovementError("The path is blocked!")
 
 		self._matrixOfPieces[aPlay.initialRow()][aPlay.initialColumn()] = None
 		self._matrixOfPieces[aPlay.newRow()][aPlay.newColumn()] = aPlay.piece()
