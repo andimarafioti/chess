@@ -29,10 +29,10 @@ class ChessBoard(object):
 		return pieces
 
 	def whitePieces(self):
-		return filter(lambda piece: piece.isWhite(), self.pieces())
+		return [piece for piece in self.pieces() if piece.isWhite()]
 
 	def blackPieces(self):
-		return filter(lambda piece: piece.isBlack(), self.pieces())
+		return [piece for piece in self.pieces() if piece.isBlack()]
 
 	def pieceAt(self, aRow, aColumn):
 		return self._matrixOfPieces[aRow][aColumn]
