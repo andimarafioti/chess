@@ -24,7 +24,7 @@ class ChessGame(object):
 	def applyAPlay(self, aPlay):
 		try:
 			newBoard = self._board.applyAPlay(aPlay)
-		except InvalidMovementError, e:
+		except InvalidMovementError as e:
 			raise e
 		self._board = newBoard
 

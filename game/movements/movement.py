@@ -35,5 +35,5 @@ class Movement(object):
 		gradient = 0
 		if anStartingPoint != aFinishPoint:
 			gradient = aFinishPoint - anStartingPoint
-			gradient = gradient / abs(gradient)
+			gradient = int(gradient / abs(gradient))
 		return gradient
