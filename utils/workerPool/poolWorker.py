@@ -44,7 +44,7 @@ class PoolWorker(Thread):
 
 			try:
 				task.run()
-			except Exception, e:
+			except Exception as e:
 				self._logger.error("PoolWorker <%s> catched an exception calling: %s%s", current_thread().ident,
 							   task._function, str(task._function))
 				self._logger.exception(e)

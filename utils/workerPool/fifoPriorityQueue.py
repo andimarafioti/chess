@@ -1,6 +1,6 @@
 # coding: utf-8
 import heapq
-from Queue import PriorityQueue
+from queue import PriorityQueue
 
 __author__ = 'Andres'
 
@@ -15,8 +15,8 @@ class FIFOPriorityQueue(PriorityQueue):
 		data = prioritized_item[1]
 		item = (priority, self._counter, data)
 		self._counter += 1
-		PriorityQueue._put(self, item, heappush)
+		PriorityQueue._put(self, item)
 
 	def _get(self, heappop=heapq.heappop):
-		_, _, item = PriorityQueue._get(self, heappop)
+		_, _, item = PriorityQueue._get(self)
 		return item

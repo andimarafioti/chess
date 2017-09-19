@@ -203,10 +203,10 @@ class TestChessGame(TestCase):
 
 		self.assertEqual(aChessGame.pieceAt(aRow=1, aColumn=4), aKing)
 
-	def test19aNewChessGameIsNotFinished(self):
-		aCheesGame = ChessGame()
+	def test19aNewChessGameIsNotStarted(self):
+		aChessGame = ChessGame()
 
-		self.assertFalse(aCheesGame.isFinished())
+		self.assertTrue(aChessGame.isFinished())
 
 	def test20aPlayInAlgebraicNotationCanBeApplied(self):
 		aChessGame = ChessGame()
@@ -305,3 +305,9 @@ class TestChessGame(TestCase):
 		aPlay = Play(aPiece=aRook, aMovement=aMovement)
 		with self.assertRaises(InvalidMovementError):
 			aChessGame.applyAPlay(aPlay)
+
+	def test28aGameCanBeStarted(self):
+		aChessGame = ChessGame()
+		aChessGame.start()
+
+		self.assertTrue(not aChessGame.isFinished())
