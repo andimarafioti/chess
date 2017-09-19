@@ -1,20 +1,13 @@
 from game.boards.newGameChessBoard import NewGameChessBoard
 from game.movements.invalidMovementError import InvalidMovementError
 from game.player import Player
-from utils.workerPool.workerPool import WorkerPool
 
 
 class ChessGame(object):
-	workerPool = WorkerPool('chess Game', 3)
-
 	def __init__(self):
 		super(ChessGame, self).__init__()
 		self._board = NewGameChessBoard()
 		self._players = [Player(self._board.whitePieces()), Player(self._board.blackPieces())]
-		self._isFinished = True
-
-	def isFinished(self):
-		return self._isFinished
 
 	def board(self):
 		return self._board
@@ -34,6 +27,3 @@ class ChessGame(object):
 
 	def players(self):
 		return self._players
-
-	def start(self):
-		self._isFinished = False
