@@ -1,13 +1,20 @@
-from game.boards.newGameChessBoard import NewGameChessBoard
-from game.movements.invalidMovementError import InvalidMovementError
-from game.player import Player
+from utils.subject import Subject
+from utils.worker.worker import Worker
 
 
 class ChessGame(object):
-	def __init__(self):
+	BOARD_CHANGE = "theBoardChanged"
+
+	def __init__(self, board, firstPlayPlayer, secondPlayPlayer):
 		super(ChessGame, self).__init__()
-		self._board = NewGameChessBoard()
-		self._players = [Player(self._board.whitePieces()), Player(self._board.blackPieces())]
+		self._board = board
+		self._players = [firstPlayPlayer, secondPlayPlayer]
+		self._nextTurnPlayer = firstPlayPlayer
+		self._subject = Subject(self)
+		Worker.call(self.gameRoutine).asDaemon.start()
+
+	def subject(self):
+		return self._subject
 
 	def board(self):
 		return self._board
@@ -18,12 +25,17 @@ class ChessGame(object):
 	def moveAPieceFromAPositionToAnother(self, aPiece, anInitialRow, anInitialColumn, aNewRow, aNewColumn):
 		self._board = self._board.moveAPieceFromAPositionToAnother(aPiece, anInitialRow, anInitialColumn, aNewRow, aNewColumn)
 
-	def applyAPlay(self, aPlay):
-		try:
-			newBoard = self._board.applyAPlay(aPlay)
-		except InvalidMovementError as e:
-			raise e
-		self._board = newBoard
-
 	def players(self):
 		return self._players
+
+	def gameRoutine(self):
+		while True:
+			print('\n saaa')
+			try:
+				aPlay = self._nextTurnPlayer.nextPlay(self._board)
+				newBoard = self._board.applyAPlay(aPlay)
+				self._nextTurnPlayer = [player for player in self._players if player is not self._nextTurnPlayer][0]
+				self._board = newBoard
+				self._subject.notify(self.BOARD_CHANGE)
+			except Exception as e:
+				print(e)

@@ -3,7 +3,10 @@ import logging
 from _weakrefset import WeakSet
 from threading import RLock
 
-from utils.auxFunctions import stringFor
+
+def stringFor(something):
+	# TODO: something smart
+	return str(something)
 
 
 class Subject(object):
@@ -49,7 +52,7 @@ class Subject(object):
 			self._logger.debug("%s is about to notify %s to %s", stringFor(self.parent), event, stringFor(obs))
 			try:
 				obs.onNotify(self.parent, event, args)
-			except Exception, e:
+			except Exception as e:
 				self._logger.error("Catched exception trying to notify %s to %s with arguments: %s",
 								   str(event),
 								   str(obs),

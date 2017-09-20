@@ -2,6 +2,7 @@ from unittest import TestCase
 
 from game.algebraicallyNotatedPlay import AlgebraicallyNotatedPlay
 from game.boards.chessBoard import ChessBoard
+from game.boards.newGameChessBoard import NewGameChessBoard
 from game.chessGame import ChessGame
 from game.movements.invalidMovementError import InvalidMovementError
 from game.movements.movement import Movement
@@ -12,208 +13,216 @@ from game.player import Player
 
 
 class TestChessGame(TestCase):
-    def test01AGameHasABoard(self):
-        aChessGame = ChessGame()
+    def test01AGameHasaChessBoard(self):
+        aChessBoard = NewGameChessBoard()
+        twoPlayers = [Player(aChessBoard.whitePieces()), Player(aChessBoard.blackPieces())]
+        aChessGame = ChessGame(aChessBoard, twoPlayers[0], twoPlayers[1])
 
         self.assertIsInstance(aChessGame.board(), ChessBoard)
 
-    def test02AGameHasABoardWithPieces(self):
-        aChessGame = ChessGame()
+    def test02AGameHasaChessBoardWithPieces(self):
+        aChessBoard = NewGameChessBoard()
+        twoPlayers = [Player(aChessBoard.whitePieces()), Player(aChessBoard.blackPieces())]
+        aChessGame = ChessGame(aChessBoard, twoPlayers[0], twoPlayers[1])
 
         self.assertIsInstance(aChessGame.board().pieces(), list)
 
         for piece in aChessGame.board().pieces():
             self.assertIsInstance(piece, Piece)
 
-    def test03AGameStartsWithABoardThatHas32Pieces(self):
-        aChessGame = ChessGame()
+    def test03AGameStartsWithaChessBoardThatHas32Pieces(self):
+        aChessBoard = NewGameChessBoard()
+        twoPlayers = [Player(aChessBoard.whitePieces()), Player(aChessBoard.blackPieces())]
+        aChessGame = ChessGame(aChessBoard, twoPlayers[0], twoPlayers[1])
 
         self.assertTrue(len(aChessGame.board().pieces()) is 32)
 
-    def test04TheGameAcceptsAPlay(self):
-        aChessGame = ChessGame()
+    def test04TheBoardAcceptsAPlay(self):
+        aChessBoard = NewGameChessBoard()
 
-        aPawn = aChessGame.pieceAt(aRow=1, aColumn=0)
+        aPawn = aChessBoard.pieceAt(aRow=1, aColumn=0)
         aMovement = Movement(anInitialRow=1, anInitialColumn=0, aNewRow=3, aNewColumn=0)
         aPlay = Play(aPiece=aPawn, aMovement=aMovement)
 
-        aChessGame.applyAPlay(aPlay)
+        aChessBoard.applyAPlay(aPlay)
 
-        self.assertEqual(aChessGame.pieceAt(aRow=3, aColumn=0), aPawn)
+        self.assertEqual(aChessBoard.pieceAt(aRow=3, aColumn=0), aPawn)
 
-    def test05TheGameDoesntAcceptAPlayIfThePieceIsNotAtTheInitialPosition(self):
-        aChessGame = ChessGame()
+    def test05TheBoardDoesntAcceptAPlayIfThePieceIsNotAtTheInitialPosition(self):
+        aChessBoard = NewGameChessBoard()
 
-        aPawn = aChessGame.pieceAt(aRow=1, aColumn=0)
+        aPawn = aChessBoard.pieceAt(aRow=1, aColumn=0)
         aMovement = Movement(anInitialRow=1, anInitialColumn=1, aNewRow=3, aNewColumn=0)
         aPlay = Play(aPiece=aPawn, aMovement=aMovement)
 
         with self.assertRaises(InvalidMovementError):
-            aChessGame.applyAPlay(aPlay)
+            aChessBoard.applyAPlay(aPlay)
 
-    def test06UponInitializationAnyPieceAtTheSecondRowIsAPawn(self):
-        aChessGame = ChessGame()
-        aListOfPawns = [aChessGame.pieceAt(aRow=1, aColumn=column) for column in range(8)]
+    def test06UponInitializationOfANewBoardAnyPieceAtTheSecondRowIsAPawn(self):
+        aChessBoard = NewGameChessBoard()
+        aListOfPawns = [aChessBoard.pieceAt(aRow=1, aColumn=column) for column in range(8)]
 
         for pawn in aListOfPawns:
             self.assertIsInstance(pawn, Pawn)
 
     def test07aPawnFirstMovementCantBeMovingForwardThreeSpaces(self):
-        aChessGame = ChessGame()
+        aChessBoard = NewGameChessBoard()
 
-        aPawn = aChessGame.pieceAt(aRow=1, aColumn=0)
+        aPawn = aChessBoard.pieceAt(aRow=1, aColumn=0)
         aMovement = Movement(anInitialRow=1, anInitialColumn=0, aNewRow=4, aNewColumn=0)
         aPlay = Play(aPiece=aPawn, aMovement=aMovement)
 
         with self.assertRaises(InvalidMovementError):
-            aChessGame.applyAPlay(aPlay)
+            aChessBoard.applyAPlay(aPlay)
 
     def test08aBishopMovesInDiagonals(self):
-        aChessGame = ChessGame()
+        aChessBoard = NewGameChessBoard()
 
-        aPawn = aChessGame.pieceAt(aRow=1, aColumn=3)
+        aPawn = aChessBoard.pieceAt(aRow=1, aColumn=3)
         aMovement = Movement(anInitialRow=1, anInitialColumn=3, aNewRow=3, aNewColumn=3)
         aBishopFreeingPlay = Play(aPiece=aPawn, aMovement=aMovement)
-        aChessGame.applyAPlay(aBishopFreeingPlay)
+        aChessBoard.applyAPlay(aBishopFreeingPlay)
 
-        aBishop = aChessGame.pieceAt(aRow=0, aColumn=2)
+        aBishop = aChessBoard.pieceAt(aRow=0, aColumn=2)
         aMovement = Movement(anInitialRow=0, anInitialColumn=2, aNewRow=2, aNewColumn=4)
         aPlay = Play(aPiece=aBishop, aMovement=aMovement)
 
-        aChessGame.applyAPlay(aPlay)
+        aChessBoard.applyAPlay(aPlay)
 
-        self.assertEqual(aChessGame.pieceAt(aRow=2, aColumn=4), aBishop)
+        self.assertEqual(aChessBoard.pieceAt(aRow=2, aColumn=4), aBishop)
 
     def test09aMovementHasToChangeItsPosition(self):
         with self.assertRaises(InvalidMovementError):
             Movement(anInitialRow=0, anInitialColumn=2, aNewRow=0, aNewColumn=2)
 
     def test10aBishopCantApplyAMovementThatHasAnotherPieceInItsPath(self):
-        aChessGame = ChessGame()
+        aChessBoard = NewGameChessBoard()
 
-        aBishop = aChessGame.pieceAt(aRow=0, aColumn=2)
+        aBishop = aChessBoard.pieceAt(aRow=0, aColumn=2)
         aMovement = Movement(anInitialRow=0, anInitialColumn=2, aNewRow=2, aNewColumn=4)
         aPlay = Play(aPiece=aBishop, aMovement=aMovement)
 
         with self.assertRaises(InvalidMovementError):
-            aChessGame.applyAPlay(aPlay)
+            aChessBoard.applyAPlay(aPlay)
 
     def test11aQueenCanMoveInDiagonals(self):
-        aChessGame = ChessGame()
+        aChessBoard = NewGameChessBoard()
 
-        aPawn = aChessGame.pieceAt(aRow=1, aColumn=2)
+        aPawn = aChessBoard.pieceAt(aRow=1, aColumn=2)
         aMovement = Movement(anInitialRow=1, anInitialColumn=2, aNewRow=3, aNewColumn=2)
         aQueenFreeingPlay = Play(aPiece=aPawn, aMovement=aMovement)
-        aChessGame.applyAPlay(aQueenFreeingPlay)
+        aChessBoard.applyAPlay(aQueenFreeingPlay)
 
-        aQueen = aChessGame.pieceAt(aRow=0, aColumn=3)
+        aQueen = aChessBoard.pieceAt(aRow=0, aColumn=3)
         aMovement = Movement(anInitialRow=0, anInitialColumn=3, aNewRow=2, aNewColumn=1)
         aPlay = Play(aPiece=aQueen, aMovement=aMovement)
 
-        aChessGame.applyAPlay(aPlay)
+        aChessBoard.applyAPlay(aPlay)
 
-        self.assertEqual(aChessGame.pieceAt(aRow=2, aColumn=1), aQueen)
+        self.assertEqual(aChessBoard.pieceAt(aRow=2, aColumn=1), aQueen)
 
     def test12aQueenCanMoveStraight(self):
-        aChessGame = ChessGame()
+        aChessBoard = NewGameChessBoard()
 
-        aPawn = aChessGame.pieceAt(aRow=1, aColumn=3)
+        aPawn = aChessBoard.pieceAt(aRow=1, aColumn=3)
         aMovement = Movement(anInitialRow=1, anInitialColumn=3, aNewRow=3, aNewColumn=3)
         aQueenFreeingPlay = Play(aPiece=aPawn, aMovement=aMovement)
-        aChessGame.applyAPlay(aQueenFreeingPlay)
+        aChessBoard.applyAPlay(aQueenFreeingPlay)
 
-        aQueen = aChessGame.pieceAt(aRow=0, aColumn=3)
+        aQueen = aChessBoard.pieceAt(aRow=0, aColumn=3)
         aMovement = Movement(anInitialRow=0, anInitialColumn=3, aNewRow=2, aNewColumn=3)
         aPlay = Play(aPiece=aQueen, aMovement=aMovement)
 
-        aChessGame.applyAPlay(aPlay)
+        aChessBoard.applyAPlay(aPlay)
 
-        self.assertEqual(aChessGame.pieceAt(aRow=2, aColumn=3), aQueen)
+        self.assertEqual(aChessBoard.pieceAt(aRow=2, aColumn=3), aQueen)
 
     def test13aKnightCanJump(self):
-        aChessGame = ChessGame()
+        aChessBoard = NewGameChessBoard()
 
-        aKnight = aChessGame.pieceAt(aRow=0, aColumn=1)
+        aKnight = aChessBoard.pieceAt(aRow=0, aColumn=1)
         aMovement = Movement(anInitialRow=0, anInitialColumn=1, aNewRow=2, aNewColumn=2)
         aPlay = Play(aPiece=aKnight, aMovement=aMovement)
 
-        aChessGame.applyAPlay(aPlay)
+        aChessBoard.applyAPlay(aPlay)
 
-        self.assertEqual(aChessGame.pieceAt(aRow=2, aColumn=2), aKnight)
+        self.assertEqual(aChessBoard.pieceAt(aRow=2, aColumn=2), aKnight)
 
     def test14aKnightCantMoveInDiagonals(self):
-        aChessGame = ChessGame()
+        aChessBoard = NewGameChessBoard()
 
-        aKnight = aChessGame.pieceAt(aRow=0, aColumn=1)
+        aKnight = aChessBoard.pieceAt(aRow=0, aColumn=1)
         aMovement = Movement(anInitialRow=0, anInitialColumn=1, aNewRow=2, aNewColumn=3)
         aPlay = Play(aPiece=aKnight, aMovement=aMovement)
 
         with self.assertRaises(InvalidMovementError):
-            aChessGame.applyAPlay(aPlay)
+            aChessBoard.applyAPlay(aPlay)
 
     def test15aKnightCantMoveStraight(self):
-        aChessGame = ChessGame()
+        aChessBoard = NewGameChessBoard()
 
-        aKnight = aChessGame.pieceAt(aRow=0, aColumn=1)
+        aKnight = aChessBoard.pieceAt(aRow=0, aColumn=1)
         aMovement = Movement(anInitialRow=0, anInitialColumn=1, aNewRow=2, aNewColumn=1)
         aPlay = Play(aPiece=aKnight, aMovement=aMovement)
 
         with self.assertRaises(InvalidMovementError):
-            aChessGame.applyAPlay(aPlay)
+            aChessBoard.applyAPlay(aPlay)
 
     def test16aKnightCantMove2StepsForwardAnd3StepsToASide(self):
-        aChessGame = ChessGame()
+        aChessBoard = NewGameChessBoard()
 
-        aKnight = aChessGame.pieceAt(aRow=0, aColumn=1)
+        aKnight = aChessBoard.pieceAt(aRow=0, aColumn=1)
         aMovement = Movement(anInitialRow=0, anInitialColumn=1, aNewRow=2, aNewColumn=4)
         aPlay = Play(aPiece=aKnight, aMovement=aMovement)
 
         with self.assertRaises(InvalidMovementError):
-            aChessGame.applyAPlay(aPlay)
+            aChessBoard.applyAPlay(aPlay)
 
     def test17aRookCanMoveInAStraightLine(self):
-        aChessGame = ChessGame()
+        aChessBoard = NewGameChessBoard()
 
-        aPawn = aChessGame.pieceAt(aRow=1, aColumn=0)
+        aPawn = aChessBoard.pieceAt(aRow=1, aColumn=0)
         aMovement = Movement(anInitialRow=1, anInitialColumn=0, aNewRow=3, aNewColumn=0)
         aRookFreeingPlay = Play(aPiece=aPawn, aMovement=aMovement)
-        aChessGame.applyAPlay(aRookFreeingPlay)
+        aChessBoard.applyAPlay(aRookFreeingPlay)
 
-        aRook = aChessGame.pieceAt(aRow=0, aColumn=0)
+        aRook = aChessBoard.pieceAt(aRow=0, aColumn=0)
         aMovement = Movement(anInitialRow=0, anInitialColumn=0, aNewRow=2, aNewColumn=0)
         aPlay = Play(aPiece=aRook, aMovement=aMovement)
 
-        aChessGame.applyAPlay(aPlay)
+        aChessBoard.applyAPlay(aPlay)
 
-        self.assertEqual(aChessGame.pieceAt(aRow=2, aColumn=0), aRook)
+        self.assertEqual(aChessBoard.pieceAt(aRow=2, aColumn=0), aRook)
 
     def test18aKingCanMoveInAnyDirectionOneStepAtATime(self):
-        aChessGame = ChessGame()
+        aChessBoard = NewGameChessBoard()
 
-        aPawn = aChessGame.pieceAt(aRow=1, aColumn=4)
+        aPawn = aChessBoard.pieceAt(aRow=1, aColumn=4)
         aMovement = Movement(anInitialRow=1, anInitialColumn=4, aNewRow=3, aNewColumn=4)
         aKingFreeingPlay = Play(aPiece=aPawn, aMovement=aMovement)
-        aChessGame.applyAPlay(aKingFreeingPlay)
+        aChessBoard.applyAPlay(aKingFreeingPlay)
 
-        aKing = aChessGame.pieceAt(aRow=0, aColumn=4)
+        aKing = aChessBoard.pieceAt(aRow=0, aColumn=4)
         aMovement = Movement(anInitialRow=0, anInitialColumn=4, aNewRow=1, aNewColumn=4)
         aPlay = Play(aPiece=aKing, aMovement=aMovement)
 
-        aChessGame.applyAPlay(aPlay)
+        aChessBoard.applyAPlay(aPlay)
 
-        self.assertEqual(aChessGame.pieceAt(aRow=1, aColumn=4), aKing)
+        self.assertEqual(aChessBoard.pieceAt(aRow=1, aColumn=4), aKing)
 
     def test20aPlayInAlgebraicNotationCanBeApplied(self):
-        aChessGame = ChessGame()
+        aChessBoard = NewGameChessBoard()
 
-        aPawn = aChessGame.pieceAt(aRow=1, aColumn=4)
-        aPlayInAlgebraicNotation = AlgebraicallyNotatedPlay('e2 e4', aChessGame)
-        aChessGame.applyAPlay(aPlayInAlgebraicNotation)
+        aPawn = aChessBoard.pieceAt(aRow=1, aColumn=4)
+        aPlayInAlgebraicNotation = AlgebraicallyNotatedPlay('e2 e4', aChessBoard)
+        aChessBoard.applyAPlay(aPlayInAlgebraicNotation)
 
-        self.assertEqual(aChessGame.pieceAt(aRow=3, aColumn=4), aPawn)
+        self.assertEqual(aChessBoard.pieceAt(aRow=3, aColumn=4), aPawn)
 
     def test21aGameHasTwoPlayers(self):
-        aChessGame = ChessGame()
+        aChessBoard = NewGameChessBoard()
+        twoPlayers = [Player(aChessBoard.whitePieces()), Player(aChessBoard.blackPieces())]
+        aChessGame = ChessGame(aChessBoard, twoPlayers[0], twoPlayers[1])
         players = aChessGame.players()
 
         self.assertTrue(len(players) == 2)
@@ -221,15 +230,17 @@ class TestChessGame(TestCase):
         self.assertIsInstance(players[1], Player)
 
     def test22aPlayHasToInvolveAPiece(self):
-        aChessGame = ChessGame()
+        aChessBoard = NewGameChessBoard()
 
-        nothing = aChessGame.pieceAt(aRow=3, aColumn=4)
+        nothing = aChessBoard.pieceAt(aRow=3, aColumn=4)
         aMovement = Movement(anInitialRow=0, anInitialColumn=4, aNewRow=1, aNewColumn=4)
         with self.assertRaises(AssertionError):
             aPlay = Play(aPiece=nothing, aMovement=aMovement)
 
     def test23aPlayerKnowsItsPieces(self):
-        aChessGame = ChessGame()
+        aChessBoard = NewGameChessBoard()
+        twoPlayers = [Player(aChessBoard.whitePieces()), Player(aChessBoard.blackPieces())]
+        aChessGame = ChessGame(aChessBoard, twoPlayers[0], twoPlayers[1])
         aPlayer = aChessGame.players()[0]
 
         aPlayersPieces = aPlayer.pieces()
@@ -242,61 +253,61 @@ class TestChessGame(TestCase):
         self.assertTrue(all([piece in boardPieces for piece in aPlayersPieces]))
 
     def test24aPawnCantMoveBackwards(self):
-        aChessGame = ChessGame()
+        aChessBoard = NewGameChessBoard()
 
-        aPawn = aChessGame.pieceAt(aRow=1, aColumn=0)
+        aPawn = aChessBoard.pieceAt(aRow=1, aColumn=0)
         aMovement = Movement(anInitialRow=1, anInitialColumn=0, aNewRow=3, aNewColumn=0)
         aPlay = Play(aPiece=aPawn, aMovement=aMovement)
 
-        aChessGame.applyAPlay(aPlay)
+        aChessBoard.applyAPlay(aPlay)
 
-        aPawn = aChessGame.pieceAt(aRow=3, aColumn=0)
+        aPawn = aChessBoard.pieceAt(aRow=3, aColumn=0)
         aMovement = Movement(anInitialRow=3, anInitialColumn=0, aNewRow=2, aNewColumn=0)
         aPlay = Play(aPiece=aPawn, aMovement=aMovement)
 
         with self.assertRaises(InvalidMovementError):
-            aChessGame.applyAPlay(aPlay)
+            aChessBoard.applyAPlay(aPlay)
 
     def test25aPawnSecondMovementCanBeTwoSpacesForward(self):
-        aChessGame = ChessGame()
+        aChessBoard = NewGameChessBoard()
 
-        aPawn = aChessGame.pieceAt(aRow=1, aColumn=0)
+        aPawn = aChessBoard.pieceAt(aRow=1, aColumn=0)
         aMovement = Movement(anInitialRow=1, anInitialColumn=0, aNewRow=3, aNewColumn=0)
         aPlay = Play(aPiece=aPawn, aMovement=aMovement)
 
-        aChessGame.applyAPlay(aPlay)
+        aChessBoard.applyAPlay(aPlay)
 
-        aPawn = aChessGame.pieceAt(aRow=3, aColumn=0)
+        aPawn = aChessBoard.pieceAt(aRow=3, aColumn=0)
         aMovement = Movement(anInitialRow=3, anInitialColumn=0, aNewRow=5, aNewColumn=0)
         aPlay = Play(aPiece=aPawn, aMovement=aMovement)
 
         with self.assertRaises(InvalidMovementError):
-            aChessGame.applyAPlay(aPlay)
+            aChessBoard.applyAPlay(aPlay)
 
     def test26aPawnCanMoveInADiagonalIfItsCapturingAnEnemysPiece(self):
-        aChessGame = ChessGame()
+        aChessBoard = NewGameChessBoard()
 
-        aWhitePawn = aChessGame.pieceAt(aRow=1, aColumn=0)
+        aWhitePawn = aChessBoard.pieceAt(aRow=1, aColumn=0)
         aMovement = Movement(anInitialRow=1, anInitialColumn=0, aNewRow=3, aNewColumn=0)
         aPlay = Play(aPiece=aWhitePawn, aMovement=aMovement)
-        aChessGame.applyAPlay(aPlay)
+        aChessBoard.applyAPlay(aPlay)
 
-        aBlackPawn = aChessGame.pieceAt(aRow=6, aColumn=1)
+        aBlackPawn = aChessBoard.pieceAt(aRow=6, aColumn=1)
         aMovement = Movement(anInitialRow=6, anInitialColumn=1, aNewRow=4, aNewColumn=1)
         aPlay = Play(aPiece=aBlackPawn, aMovement=aMovement)
-        aChessGame.applyAPlay(aPlay)
+        aChessBoard.applyAPlay(aPlay)
 
         aMovement = Movement(anInitialRow=3, anInitialColumn=0, aNewRow=4, aNewColumn=1)
         aPlay = Play(aPiece=aWhitePawn, aMovement=aMovement)
-        aChessGame.applyAPlay(aPlay)
+        aChessBoard.applyAPlay(aPlay)
 
-        self.assertTrue(aChessGame.pieceAt(4, 1) is aWhitePawn)
+        self.assertTrue(aChessBoard.pieceAt(4, 1) is aWhitePawn)
 
     def test27aPieceCannotCaptureApieceFromItsSameTeam(self):
-        aChessGame = ChessGame()
+        aChessBoard = NewGameChessBoard()
 
-        aRook = aChessGame.pieceAt(aRow=0, aColumn=0)
+        aRook = aChessBoard.pieceAt(aRow=0, aColumn=0)
         aMovement = Movement(anInitialRow=0, anInitialColumn=0, aNewRow=1, aNewColumn=0)
         aPlay = Play(aPiece=aRook, aMovement=aMovement)
         with self.assertRaises(InvalidMovementError):
-            aChessGame.applyAPlay(aPlay)
+            aChessBoard.applyAPlay(aPlay)

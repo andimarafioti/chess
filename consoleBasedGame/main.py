@@ -1,12 +1,22 @@
+from time import sleep
+
 from game.algebraicallyNotatedPlay import AlgebraicallyNotatedPlay
+from game.boards.newGameChessBoard import NewGameChessBoard
 from game.chessGame import ChessGame
+from game.player import Player
 
-aChessGame = ChessGame()
-isFinished = False
-print(aChessGame.board())
+aBoard = NewGameChessBoard()
+twoPlayers = [Player(aBoard.whitePieces()), Player(aBoard.blackPieces())]
+aChessGame = ChessGame(aBoard, twoPlayers[0], twoPlayers[1])
 
-while not isFinished:
-	userInput = input('Insert next movement in Algebraic Notation --> ')
-	aPlayInAlgebraicNotation = AlgebraicallyNotatedPlay(userInput, aChessGame)
-	aChessGame.applyAPlay(aPlayInAlgebraicNotation)
-	print(aChessGame.board())
+
+class ChessGameObserver(object):
+    def __init__(self, aChessGame):
+        aChessGame.subject().addObserver(self)
+
+    def onNotify(self, emitter, event, args):
+        print(emitter.board())
+
+aChessGameObserver = ChessGameObserver(aChessGame)
+
+sleep(100)
