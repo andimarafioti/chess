@@ -30,7 +30,6 @@ class ChessGame(object):
 
 	def gameRoutine(self):
 		while True:
-			print('\n saaa')
 			try:
 				aPlay = self._nextTurnPlayer.nextPlay(self._board)
 				newBoard = self._board.applyAPlay(aPlay)

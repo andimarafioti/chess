@@ -1,6 +1,5 @@
 from time import sleep
 
-from game.algebraicallyNotatedPlay import AlgebraicallyNotatedPlay
 from game.boards.newGameChessBoard import NewGameChessBoard
 from game.chessGame import ChessGame
 from game.player import Player

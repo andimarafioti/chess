@@ -20,7 +20,7 @@ class TestChessGame(TestCase):
 
         self.assertIsInstance(aChessGame.board(), ChessBoard)
 
-    def test02AGameHasaChessBoardWithPieces(self):
+    def test02AGameHasAChessBoardWithPieces(self):
         aChessBoard = NewGameChessBoard()
         twoPlayers = [Player(aChessBoard.whitePieces()), Player(aChessBoard.blackPieces())]
         aChessGame = ChessGame(aChessBoard, twoPlayers[0], twoPlayers[1])
@@ -311,3 +311,24 @@ class TestChessGame(TestCase):
         aPlay = Play(aPiece=aRook, aMovement=aMovement)
         with self.assertRaises(InvalidMovementError):
             aChessBoard.applyAPlay(aPlay)
+
+    def test28aPlayIsOnlyAppliedWhenThePieceMovedIsFromTheOwner(self):
+        aChessBoard = NewGameChessBoard()
+
+        whitePlayer = Player(aChessBoard.whitePieces())
+        blackPlayer = Player(aChessBoard.blackPieces())
+
+        aWhitePawn = aChessBoard.pieceAt(aRow=1, aColumn=0)
+        aMovement = Movement(anInitialRow=1, anInitialColumn=0, aNewRow=3, aNewColumn=0)
+        aPlay = Play(aPiece=aWhitePawn, aMovement=aMovement)
+        aChessBoard.applyAPlay(aPlay)
+        whitePlayer._assertPlayIsValid(aPlay)
+        with self.assertRaises(Exception):
+            blackPlayer._assertPlayIsValid(aPlay)
+
+        aBlackPawn = aChessBoard.pieceAt(aRow=6, aColumn=1)
+        aMovement = Movement(anInitialRow=6, anInitialColumn=1, aNewRow=4, aNewColumn=1)
+        aPlay = Play(aPiece=aBlackPawn, aMovement=aMovement)
+        blackPlayer._assertPlayIsValid(aPlay)
+        with self.assertRaises(Exception):
+            whitePlayer._assertPlayIsValid(aPlay)
