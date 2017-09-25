@@ -332,3 +332,18 @@ class TestChessGame(TestCase):
         blackPlayer._assertPlayIsValid(aPlay)
         with self.assertRaises(Exception):
             whitePlayer._assertPlayIsValid(aPlay)
+
+    def test29aKingCanCastleToTheLeft(self):
+        aChessBoard = NewGameChessBoard()
+        aChessBoard._matrixOfPieces[0][1] = None
+        aChessBoard._matrixOfPieces[0][2] = None
+        aChessBoard._matrixOfPieces[0][3] = None
+
+        aWhiteKing = aChessBoard.pieceAt(aRow=0, aColumn=4)
+        aWhiteRook = aChessBoard.pieceAt(aRow=0, aColumn=0)
+        aMovement = Movement(anInitialRow=0, anInitialColumn=4, aNewRow=0, aNewColumn=2)
+        aPlay = Play(aPiece=aWhiteKing, aMovement=aMovement)
+        aChessBoard.applyAPlay(aPlay)
+
+        self.assertEqual(aChessBoard.pieceAt(aRow=0, aColumn=2), aWhiteKing)
+        self.assertEqual(aChessBoard.pieceAt(aRow=0, aColumn=3), aWhiteRook)
