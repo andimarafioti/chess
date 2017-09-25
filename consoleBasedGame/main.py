@@ -1,12 +1,13 @@
 from time import sleep
 
+from consoleBasedGame.consolePlayer import ConsolePlayer
 from game.boards.newGameChessBoard import NewGameChessBoard
 from game.chessGame import ChessGame
-from game.player import Player
 
 aBoard = NewGameChessBoard()
-twoPlayers = [Player(aBoard.whitePieces()), Player(aBoard.blackPieces())]
+twoPlayers = [ConsolePlayer(aBoard.whitePieces()), ConsolePlayer(aBoard.blackPieces())]
 aChessGame = ChessGame(aBoard, twoPlayers[0], twoPlayers[1])
+print(aChessGame.board())
 
 
 class ChessGameObserver(object):
@@ -17,5 +18,6 @@ class ChessGameObserver(object):
         print(emitter.board())
 
 aChessGameObserver = ChessGameObserver(aChessGame)
+aChessGame.startGameRoutine()
 
 sleep(100)

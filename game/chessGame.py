@@ -11,6 +11,8 @@ class ChessGame(object):
 		self._players = [firstPlayPlayer, secondPlayPlayer]
 		self._nextTurnPlayer = firstPlayPlayer
 		self._subject = Subject(self)
+
+	def startGameRoutine(self):
 		Worker.call(self.gameRoutine).asDaemon.start()
 
 	def subject(self):
