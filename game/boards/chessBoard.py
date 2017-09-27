@@ -38,6 +38,16 @@ class ChessBoard(object):
 		return self._matrixOfPieces[aRow][aColumn]
 
 	def applyAPlay(self, aPlay):
+		self._assertAPlayIsValidForThisBoard(aPlay)
+
+		self._matrixOfPieces[aPlay.initialRow()][aPlay.initialColumn()] = None
+		self._matrixOfPieces[aPlay.newRow()][aPlay.newColumn()] = aPlay.piece()
+
+		newChessBoard = ChessBoard(self._matrixOfPieces)
+		aPlay.piece().appliedPlay(aPlay)
+		return newChessBoard
+
+	def _assertAPlayIsValidForThisBoard(self, aPlay):
 		if not aPlay.piece() == self._matrixOfPieces[aPlay.initialRow()][aPlay.initialColumn()]:
 			raise InvalidMovementError
 		if not self.canApplyAPlaysPath(aPlay):
@@ -51,13 +61,6 @@ class ChessBoard(object):
 		else:
 			if not aPlay.piece().canApplyAMovement(aPlay.movement()):
 				raise InvalidMovementError("The piece doesn't move like that")
-
-		self._matrixOfPieces[aPlay.initialRow()][aPlay.initialColumn()] = None
-		self._matrixOfPieces[aPlay.newRow()][aPlay.newColumn()] = aPlay.piece()
-
-		newChessBoard = ChessBoard(self._matrixOfPieces)
-		aPlay.piece().appliedPlay(aPlay)
-		return newChessBoard
 
 	def canApplyAPlaysPath(self, aPlay):
 		return aPlay.piece().canJumpAnotherPiece() or self._movementsPathIsUnocupied(aPlay.movement())
