@@ -2,6 +2,8 @@ from utils.colors import bcolors
 
 
 class Piece(object):
+	HAS_MOVED = False
+
 	def __init__(self, isWhite):
 		self._isWhite = isWhite
 		super(Piece, self).__init__()
@@ -11,6 +13,7 @@ class Piece(object):
 		return color + type(self).__name__ + bcolors.ENDC
 
 	def appliedPlay(self, aPlay):
+		self.HAS_MOVED = True
 		return
 
 	def isWhite(self):
@@ -34,3 +37,6 @@ class Piece(object):
 
 	def _isAnStraightMovement(self, aMovement):
 		return aMovement.initialRow() == aMovement.newRow() or aMovement.initialColumn() == aMovement.newColumn()
+
+	def canApplyASpecialPlay(self, aPlay):
+		False
