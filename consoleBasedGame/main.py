@@ -20,4 +20,5 @@ class ChessGameObserver(object):
 aChessGameObserver = ChessGameObserver(aChessGame)
 aChessGame.startGameRoutine()
 
-sleep(100)
+while True:
+    sleep(100)
