@@ -347,3 +347,17 @@ class TestChessGame(TestCase):
 
         self.assertEqual(aChessBoard.pieceAt(aRow=0, aColumn=2), aWhiteKing)
         self.assertEqual(aChessBoard.pieceAt(aRow=0, aColumn=3), aWhiteRook)
+
+    def test30aKingCanCastleToTheRight(self):
+        aChessBoard = NewGameChessBoard()
+        aChessBoard._matrixOfPieces[0][6] = None
+        aChessBoard._matrixOfPieces[0][5] = None
+
+        aWhiteKing = aChessBoard.pieceAt(aRow=0, aColumn=4)
+        aWhiteRook = aChessBoard.pieceAt(aRow=0, aColumn=7)
+        aMovement = Movement(anInitialRow=0, anInitialColumn=4, aNewRow=0, aNewColumn=6)
+        aPlay = Play(aPiece=aWhiteKing, aMovement=aMovement)
+        aChessBoard.applyAPlay(aPlay)
+
+        self.assertEqual(aChessBoard.pieceAt(aRow=0, aColumn=6), aWhiteKing)
+        self.assertEqual(aChessBoard.pieceAt(aRow=0, aColumn=5), aWhiteRook)
