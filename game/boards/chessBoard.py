@@ -49,7 +49,7 @@ class ChessBoard(object):
 
 	def _assertAPlayIsValidForThisBoard(self, aPlay):
 		if not aPlay.piece() == self._matrixOfPieces[aPlay.initialRow()][aPlay.initialColumn()]:
-			raise InvalidMovementError
+			raise InvalidMovementError("The selected piece is not at the starting point")
 		if not self.canApplyAPlaysPath(aPlay):
 			raise InvalidMovementError("The path is blocked!")
 		capturedPiece = self._matrixOfPieces[aPlay.newRow()][aPlay.newColumn()]
