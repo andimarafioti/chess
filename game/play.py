@@ -7,7 +7,6 @@ class Play(object):
 		assert isinstance(aPiece, Piece), 'A play has to involve a Piece'
 		self._aPiece = aPiece
 		self._aMovement = aMovement
-		self._hasConsequencesAfterApplied = False
 
 	def piece(self):
 		return self._aPiece
@@ -27,15 +26,11 @@ class Play(object):
 	def newColumn(self):
 		return self._aMovement.newColumn()
 
-	def pieceCanApplyAMovement(self):
-		return self._aPiece.canApplyAMovement(self._aMovement) #  or self._aPiece.canApplyASpecialPlay(self)
+	def pieceMovesLikeThis(self):
+		return self._aPiece.canApplyAMovement(self._aMovement)
 
-	# def hasConsequencesAfterApplied(self):
-	# 	return self._hasConsequencesAfterApplied
-    #
-	# def applyConsequenquencesToBoard(self, chessBoard):
-    #
-	# 	newChessBoard = ChessBoard()
-    #
-	# def setSpecialPlayConsequence(self, ):
+	def isSpecialForThisBoard(self, aChessBoard):
+		return self._aPiece.isThisPlaySpecialForThisBoard(self, aChessBoard)
 
+	def applySpecialConsequencesToThisBoard(self, aChessBoard):
+		return self._aPiece.applySpecialConsequencesOfAPlayToABoard(self, aChessBoard)
