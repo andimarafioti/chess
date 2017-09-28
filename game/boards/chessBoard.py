@@ -45,6 +45,10 @@ class ChessBoard(object):
 
 		newChessBoard = ChessBoard(self._matrixOfPieces)
 		aPlay.piece().appliedPlay(aPlay)
+
+		# if aPlay.hasConsequencesAfterApplied():
+		# 	newChessBoard = aPlay.applyConsequenquencesToBoard(newChessBoard)
+
 		return newChessBoard
 
 	def _assertAPlayIsValidForThisBoard(self, aPlay):
@@ -59,7 +63,7 @@ class ChessBoard(object):
 			if not aPlay.piece().canCaptureAnotherPieceWithAMovement(aPlay.movement()):
 				raise InvalidMovementError("The piece can't capture another piece with this movement")
 		else:
-			if not aPlay.piece().canApplyAMovement(aPlay.movement()):
+			if not aPlay.pieceCanApplyAMovement():
 				raise InvalidMovementError("The piece doesn't move like that")
 
 	def canApplyAPlaysPath(self, aPlay):
