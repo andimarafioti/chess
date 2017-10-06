@@ -32,11 +32,14 @@ class ChessGame(object):
 
 	def gameRoutine(self):
 		while True:
-			try:
-				aPlay = self._nextTurnPlayer.nextPlay(self._board)
-				newBoard = self._board.applyAPlay(aPlay)
-				self._nextTurnPlayer = [player for player in self._players if player is not self._nextTurnPlayer][0]
-				self._board = newBoard
-				self._subject.notify(self.BOARD_CHANGE)
-			except Exception as e:
-				print(e)
+			self._doGameStep()
+
+	def _doGameStep(self):
+		try:
+			aPlay = self._nextTurnPlayer.nextPlay(self._board)
+			newBoard = self._board.applyAPlay(aPlay)
+			self._nextTurnPlayer = [player for player in self._players if player is not self._nextTurnPlayer][0]
+			self._board = newBoard
+			self._subject.notify(self.BOARD_CHANGE)
+		except Exception as e:
+			print(e)
