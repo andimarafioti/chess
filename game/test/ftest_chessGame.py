@@ -8,6 +8,7 @@ from game.movements.invalidMovementError import InvalidMovementError
 from game.movements.movement import Movement
 from game.pieces.pawn import Pawn
 from game.pieces.piece import Piece
+from game.pieces.queen import Queen
 from game.play import Play
 from game.player import Player
 
@@ -361,3 +362,28 @@ class TestChessGame(TestCase):
 
         self.assertEqual(aChessBoard.pieceAt(aRow=0, aColumn=6), aWhiteKing)
         self.assertEqual(aChessBoard.pieceAt(aRow=0, aColumn=5), aWhiteRook)
+
+    def test31aPawnCanCrown(self):
+        aChessBoard = NewGameChessBoard()
+
+        for i in range(8):
+            aChessBoard._matrixOfPieces[i][0] = None
+
+        aWhitePawn = aChessBoard.pieceAt(aRow=1, aColumn=1)
+        aChessBoard._matrixOfPieces[6][0] = aWhitePawn
+
+        class FakeNextPlayer(Player):
+            def nextPlay(self, aChessBoard):
+                aWhitePawn = aChessBoard.pieceAt(aRow=1, aColumn=1)
+                aMovement = Movement(anInitialRow=6, anInitialColumn=0, aNewRow=7, aNewColumn=0)
+                return Play(aPiece=aWhitePawn, aMovement=aMovement)
+
+        twoPlayers = [FakeNextPlayer(aChessBoard.whitePieces()), Player(aChessBoard.blackPieces())]
+
+        aChessGame = ChessGame(aChessBoard, twoPlayers[0], twoPlayers[1])
+        aChessGame._doGameStep()
+
+        self.assertTrue(aChessGame.board().pieceAt(aRow=7, aColumn=0).isWhite())
+        self.assertIsInstance(aChessGame.board().pieceAt(aRow=7, aColumn=0), Queen)
+
+
