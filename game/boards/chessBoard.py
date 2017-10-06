@@ -81,3 +81,13 @@ class ChessBoard(object):
 		for row, column in intermediary_path:
 			is_ocuppied.append(self._matrixOfPieces[row][column] is None)
 		return all(is_ocuppied)
+
+	def applyAPawnPromotingPlay(self, aPlay, aNewPiece):
+		self._matrixOfPieces[aPlay.initialRow()][aPlay.initialColumn()] = None
+		self._matrixOfPieces[aPlay.newRow()][aPlay.newColumn()] = aNewPiece
+		newChessBoard = ChessBoard(self._matrixOfPieces)
+		aNewPiece.hasMoved()
+
+		return newChessBoard
+
+

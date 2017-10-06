@@ -378,6 +378,9 @@ class TestChessGame(TestCase):
                 aMovement = Movement(anInitialRow=6, anInitialColumn=0, aNewRow=7, aNewColumn=0)
                 return Play(aPiece=aWhitePawn, aMovement=aMovement)
 
+            def chooseNewRankForPawn(self, aPawn):
+                return Queen(aPawn.isWhite())
+
         twoPlayers = [FakeNextPlayer(aChessBoard.whitePieces()), Player(aChessBoard.blackPieces())]
 
         aChessGame = ChessGame(aChessBoard, twoPlayers[0], twoPlayers[1])
@@ -385,5 +388,3 @@ class TestChessGame(TestCase):
 
         self.assertTrue(aChessGame.board().pieceAt(aRow=7, aColumn=0).isWhite())
         self.assertIsInstance(aChessGame.board().pieceAt(aRow=7, aColumn=0), Queen)
-
-

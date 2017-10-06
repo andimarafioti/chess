@@ -10,6 +10,9 @@ class Player(object):
 		self._assertPlayIsValid(aPlay)
 		return aPlay
 
+	def chooseNewRankForPawn(self, aPawn):
+		raise NotImplementedError('Subclass Responsibility')
+
 	def _getPlayFromUser(self, aChessBoard):
 		raise NotImplementedError('Subclass Responsibility')
 

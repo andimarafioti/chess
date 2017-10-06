@@ -1,3 +1,4 @@
+from game.pieces.pawn import PromotePawnException
 from utils.subject import Subject
 from utils.worker.worker import Worker
 
@@ -38,8 +39,20 @@ class ChessGame(object):
 		try:
 			aPlay = self._nextTurnPlayer.nextPlay(self._board)
 			newBoard = self._board.applyAPlay(aPlay)
-			self._nextTurnPlayer = [player for player in self._players if player is not self._nextTurnPlayer][0]
+
 			self._board = newBoard
-			self._subject.notify(self.BOARD_CHANGE)
+			self._finishTurn()
+
+		except PromotePawnException:
+			aNewPiece = self._nextTurnPlayer.chooseNewRankForPawn(aPlay.piece())
+			newBoard = self._board.applyAPawnPromotingPlay(aPlay, aNewPiece)
+
+			self._board = newBoard
+			self._finishTurn()
+
 		except Exception as e:
 			print(e)
+
+	def _finishTurn(self):
+		self._nextTurnPlayer = [player for player in self._players if player is not self._nextTurnPlayer][0]
+		self._subject.notify(self.BOARD_CHANGE)

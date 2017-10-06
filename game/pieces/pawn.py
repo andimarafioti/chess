@@ -22,3 +22,18 @@ class Pawn(Piece):
 	def canCaptureAnotherPieceWithAMovement(self, aMovement):
 		return 0 < abs(aMovement.initialColumn() - aMovement.newColumn()) < 2 and \
 			self._movementIsXStepsInTheRightDirection(aMovement, 1)
+
+	def isThisPlaySpecialForThisBoard(self, aPlay, aChessBoard):
+		return self._playPromotesMe(aPlay)
+
+	def applySpecialConsequencesOfAPlayToABoard(self, aPlay, aBoard):
+		if self._playPromotesMe(aPlay):
+			raise PromotePawnException()
+		raise Exception("Pawn doesnt know this weird play")
+
+	def _playPromotesMe(self, aPlay):
+		return self._isWhite and aPlay.newRow() is 7 or not self._isWhite and aPlay.newRow() is 0
+
+
+class PromotePawnException(Exception):
+	pass
