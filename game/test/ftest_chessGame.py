@@ -14,7 +14,7 @@ from game.player import Player
 
 
 class TestChessGame(TestCase):
-    def test01AGameHasaChessBoard(self):
+    def test01AGameHasAChessBoard(self):
         aChessBoard = NewGameChessBoard()
         twoPlayers = [Player(aChessBoard.whitePieces()), Player(aChessBoard.blackPieces())]
         aChessGame = ChessGame(aChessBoard, twoPlayers[0], twoPlayers[1])
